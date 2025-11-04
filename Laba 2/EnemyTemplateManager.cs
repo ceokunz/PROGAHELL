@@ -144,5 +144,50 @@ namespace laba_2
             return $"{Name} (HP: {MaxHitpoints}, Gold: {GoldReward}, Chance: {SpawnChance:P2})";
         }
     }
+
+    public class EnemySpawner
+    {
+        private List<CEnemyTemplate> templates;
+
+        public EnemySpawner(List<CEnemyTemplate> templates)
+        {
+            this.templates = templates;
+            NormalizeChances();
+        }
+
+        private void NormalizeChances()
+        {
+            double sum = templates.Sum(t => t.SpawnChance);
+            if (sum == 0) return;
+            foreach (var t in templates)
+                t.SpawnChance /= sum;
+        }
+
+        public CEnemyTemplate GetRandomTemplate()
+        {
+            double chance = new Random().NextDouble();
+            double cumulative = 0;
+            foreach (var t in templates)
+            {
+                cumulative += t.SpawnChance;
+                if (cumulative >= chance)
+                    return t;
+            }
+            return templates.Last();
+        }
+
+        public Enemy CreateRandomEnemy()
+        {
+            var template = GetRandomTemplate();
+            return new Enemy(
+                template.Name,
+                template.MaxHitpoints,
+                template.GoldReward,
+                template.MaxHitpoints.Clone(),
+                false,
+                new IconItem(template.IconPath)
+            );
+        }
+    }
 }
 
