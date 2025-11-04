@@ -75,7 +75,7 @@ namespace laba_2
             {
                 isDead = true;
                 currentHitpoints = new BigNumber("0");
-                goldReward = goldReward;
+                goldReward = this.goldReward;
                 return true;
             }
 

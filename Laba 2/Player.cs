@@ -11,7 +11,7 @@ namespace laba_2
         int lvl;
         BigNumber gold;
         BigNumber damage;
-        double damageModifier;
+        long damageModifier;
         BigNumber upgradeCost;
         double upgradeModifier;
 
@@ -31,7 +31,7 @@ namespace laba_2
             get;
             private set;
         }
-        public double DamageModifier
+        public long DamageModifier
         {
             get;
             private set;
@@ -47,7 +47,7 @@ namespace laba_2
             private set;
         }
 
-        public Player(int Lvl, BigNumber Gold, BigNumber Damage, double DamageModifier, BigNumber UpgradeCost, double UpgradeModifier)
+        public Player(int Lvl, BigNumber Gold, BigNumber Damage, long DamageModifier, BigNumber UpgradeCost, double UpgradeModifier)
         {
             lvl = 1;
             gold = Gold;
@@ -59,7 +59,7 @@ namespace laba_2
 
         public bool AddGold(BigNumber amount)
         {
-            gold.Add(amount);
+            gold = gold.Add(amount);
             return true;
         }
 
@@ -76,7 +76,7 @@ namespace laba_2
 
             BigNumber multiplier = new BigNumber(upgradeModifier.ToString("F0"));
 
-            double nextMult = upgradeModifier * lvl;
+            long nextMult = (long)Math.Round(upgradeModifier * lvl);
             upgradeCost = upgradeCost.Multiply(nextMult);
 
             return true;

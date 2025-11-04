@@ -105,7 +105,7 @@
                 </Grid>
 
                 <Grid Grid.Row="2">
-                    <Button Content="UPGRADE" Click="UpgradeButton" x:Name="Upgrade"></Button>
+                    <!--<Button Content="UPGRADE" Click="UpgradeButton" x:Name="Upgrade"></Button>-->
                 </Grid>
 
                 <!-- Злата игрока )))))))) -->
@@ -129,12 +129,11 @@
             </Grid>
         </Grid>
 
-        <!-- Медиа (оставляем как есть) -->
-        <MediaElement Name="VideoControl"
+        <!--<MediaElement Name="VideoControl"
                       Source="C:\true_end.wmv"
                       LoadedBehavior="Manual"
                       UnloadedBehavior="Stop"
                       Visibility="Collapsed"
-                      MediaEnded="VideoControl_MediaEnded"/>
+                      MediaEnded="VideoControl_MediaEnded"/>-->
     </Grid>
 </Window>
