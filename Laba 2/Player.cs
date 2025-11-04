@@ -17,34 +17,34 @@ namespace laba_2
 
         public int Lvl
         {
-            get { return lvl; }
-            set { lvl = value; }
+            get;
+            private set;
         }
         public BigNumber Gold
         {
-            get { return gold; }
-            set { gold = value; }
+            get;
+            private set;
         }
 
         public BigNumber Damage
         {
-            get { return damage; }
-            set { damage = value; }
+            get;
+            private set;
         }
         public double DamageModifier
         {
-            get { return damageModifier; }
-            set { damageModifier = value; }
+            get;
+            private set;
         }
         public BigNumber UpgradeCost
         {
-            get { return upgradeCost; }
-            set { upgradeCost = value; }
+            get;
+            private set;
         }
         public double UpgradeModifier
         {
-            get { return upgradeModifier; }
-            set { upgradeModifier = value; }
+            get;
+            private set;
         }
 
         public Player(int Lvl, BigNumber Gold, BigNumber Damage, double DamageModifier, BigNumber UpgradeCost, double UpgradeModifier)
@@ -65,23 +65,26 @@ namespace laba_2
 
         public bool TryUpgrade()
         {
-            if ((gold > upgradeCost))
-            {
-                gold.Subtract(upgradeCost);
-                lvl++;
+            if (gold.CompareTo(upgradeCost) < 0)
+                return false;
 
-                damage.Multiply(damageModifier);
-                upgradeCost.Multiply(upgradeModifier);
+            gold = gold.Subtract(upgradeCost);
 
-                return true;
-            }
-            return false;
+            damage = damage.Multiply(damageModifier);
+
+            lvl++;
+
+            BigNumber multiplier = new BigNumber(upgradeModifier.ToString("F0"));
+
+            double nextMult = upgradeModifier * lvl;
+            upgradeCost = upgradeCost.Multiply(nextMult);
+
+            return true;
         }
 
         public BigNumber DealDamage(Enemy enemy)
         {
             return null;
-            //enemy.TakeDamage(damage);
         }
 
         private void RecalculateStats()

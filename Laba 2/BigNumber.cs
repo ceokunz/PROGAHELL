@@ -164,7 +164,7 @@ namespace laba_2
             return result;
         }
 
-        private int CompareTo(BigNumber bnum)
+        public int CompareTo(BigNumber bnum)
         {
             if (ArrayLength != bnum.ArrayLength)
                 return ArrayLength.CompareTo(bnum.ArrayLength);
