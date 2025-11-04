@@ -17,38 +17,38 @@ namespace laba_2
 
         public string Name
         {
-            get { return name; }
-            set { name = value; }
+            get;
+            private set;
         }
 
         public BigNumber MaxHitpoints
         {
-            get { return maxHitpoints; }
-            set { maxHitpoints = value; }
+            get;
+            private set;
         }
 
         public BigNumber GoldReward
         {
-            get { return goldReward; }
-            set { goldReward = value; }
+            get;
+            private set;
         }
 
-        public BigNumber Hitpoints
+        public BigNumber CurrentHitpoints
         {
-            get { return currentHitpoints; }
-            set { currentHitpoints = value; }
+            get;
+            private set;
         }
 
         public bool IsDead
         {
-            get { return isDead; }
-            set { isDead = value; }
+            get;
+            private set;
         }
 
         public IconItem Icon
         {
-            get { return icon; }
-            set { icon = value; }
+            get;
+            private set;
         }
 
 
@@ -63,20 +63,28 @@ namespace laba_2
             icon = Icon;
         }
 
-        public bool TakeDamage(BigNumber dmg, out BigNumber GoldReward)
+        public bool TakeDamage(BigNumber dmg, out BigNumber goldReward)
         {
-            //if (Player.Damage)
-            //{
+            goldReward = new BigNumber("0");
 
-            //}
+            if (isDead) return false;
 
-            GoldReward = new BigNumber("222");
-            return true;
+            currentHitpoints = currentHitpoints.Subtract(dmg);
+
+            if (currentHitpoints.CompareTo(new BigNumber("0")) <= 0)
+            {
+                isDead = true;
+                currentHitpoints = new BigNumber("0");
+                goldReward = goldReward;
+                return true;
+            }
+
+            return false;
         }
 
         private void Die()
         {
-
+            //говно
         }
     }
 }
