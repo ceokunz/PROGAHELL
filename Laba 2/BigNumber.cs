@@ -9,7 +9,7 @@ namespace laba_2
     public class BigNumber
     {
         private int[] number;
-        private const int Base = 10;
+        private const int Base = 1000;
         public int ArrayLength => number.Length;
 
         public BigNumber(string numberStr)
@@ -164,7 +164,7 @@ namespace laba_2
             return result;
         }
 
-        private int CompareTo(BigNumber bnum)
+        public int CompareTo(BigNumber bnum)
         {
             if (ArrayLength != bnum.ArrayLength)
                 return ArrayLength.CompareTo(bnum.ArrayLength);
