@@ -15,22 +15,20 @@ namespace laba_2
         {
             InitializeComponent();
 
-            // Инициализация игрока
             player = new Player(
                 Lvl: 1,
                 Gold: new BigNumber("0"),
                 Damage: new BigNumber("1"),
-                DamageModifier: 2,           // ×2 урона при апгрейде
+                DamageModifier: 2,           
                 UpgradeCost: new BigNumber("10"),
-                UpgradeModifier: 1.2         // будет округляться до long
+                UpgradeModifier: 1.2         
             );
 
-            // Создание шаблонов врагов (можно загружать из файла позже)
             var templates = new List<CEnemyTemplate>
             {
-                new CEnemyTemplate("Slime", "10", "5", 70, "pack://application:,,,/Resources/slime.png"),
-                new CEnemyTemplate("Orc", "50", "20", 25, "pack://application:,,,/Resources/orc.png"),
-                new CEnemyTemplate("Dragon", "200", "100", 5, "pack://application:,,,/Resources/dragon.png")
+                new CEnemyTemplate("Slime", "10", "5", 70, ""),
+                new CEnemyTemplate("Orc", "50", "20", 25, ""),
+                new CEnemyTemplate("Dragon", "200", "100", 5, "")
             };
 
             enemyManager = new EnemyTemplateManager();
@@ -83,7 +81,7 @@ namespace laba_2
 
         private void Repeat_Click(object sender, RoutedEventArgs e)
         {
-            // Ничего не делаем — текущий враг остаётся
+            
         }
 
         private void Next_Click(object sender, RoutedEventArgs e)
@@ -93,12 +91,10 @@ namespace laba_2
 
         private void UpdateUI()
         {
-            // Обновление данных игрока
             PlayerLvl.Text = player.Lvl.ToString();
             PlayerGold.Text = player.Gold.ToString();
             PlayerDamage.Text = player.Damage.ToString();
 
-            // Обновление данных врага
             if (currentEnemy != null)
             {
                 EnemyNameBlock.Text = currentEnemy.Name;

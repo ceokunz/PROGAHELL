@@ -17,38 +17,38 @@ namespace laba_2
 
         public string Name
         {
-            get;
-            private set;
+            get { return name; }
+            private set { name = value; }
         }
 
         public BigNumber MaxHitpoints
         {
-            get;
-            private set;
+            get { return maxHitpoints;}
+            private set { maxHitpoints = value; }
         }
 
         public BigNumber GoldReward
         {
-            get;
-            private set;
+            get { return goldReward;}
+            private set { goldReward = value; }
         }
 
         public BigNumber CurrentHitpoints
         {
-            get;
-            private set;
+            get { return currentHitpoints;}
+            private set { currentHitpoints = value; }
         }
 
         public bool IsDead
         {
-            get;
-            private set;
+            get { return isDead;}
+            private set { isDead = value;}
         }
 
         public IconItem Icon
         {
-            get;
-            private set;
+            get{ return icon;}
+            private set { icon = value;}
         }
 
 

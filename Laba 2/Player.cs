@@ -17,34 +17,34 @@ namespace laba_2
 
         public int Lvl
         {
-            get;
-            private set;
+            get { return lvl; }
+            private set { lvl = value; }    
         }
         public BigNumber Gold
         {
-            get;
-            private set;
+            get { return gold; }
+            private set { gold = value; }
         }
 
         public BigNumber Damage
         {
-            get;
-            private set;
+            get { return damage; }
+            private set {  damage = value; }
         }
         public long DamageModifier
         {
-            get;
-            private set;
+            get { return damageModifier; }
+            private set { damageModifier = value; }
         }
         public BigNumber UpgradeCost
         {
-            get;
-            private set;
+            get {  return upgradeCost; }
+            private set { upgradeCost = value; }
         }
         public double UpgradeModifier
         {
-            get;
-            private set;
+            get {  return upgradeModifier; }
+            private set { upgradeModifier = value; }    
         }
 
         public Player(int Lvl, BigNumber Gold, BigNumber Damage, long DamageModifier, BigNumber UpgradeCost, double UpgradeModifier)
