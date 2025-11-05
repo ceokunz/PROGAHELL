@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:laba_2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="PROGAHELL" Height="450" Width="800">
 
     <!--Вонючки-говнючки колонки-->
     
     <Grid>
+        
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="2*"/>
@@ -17,47 +19,45 @@
 
         <!--БОЛЬШЕ ГРИДОВ БОГУ ГРИДОВ-->
 
-        <Grid x:Name="EnemyGrid" Grid.Column="0" Margin="10" VerticalAlignment="Center">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="50"/>
-            </Grid.RowDefinitions>
+        <Grid x:Name="EnemyGrid" Grid.Column="0" Margin="10">
+            <Grid.Background>
+                <ImageBrush ImageSource="C:\Users\user\Source\Repos\ceokunz\PROGAHELL\laba 2\Resources\gridback.png" 
+                    Stretch="Uniform"
+                            Opacity="0.5"/>
+            </Grid.Background>
 
-            <!-- имя -->
+            <!-- StackPanel с вертикальным центрированием -->
+            <StackPanel VerticalAlignment="Center">
+                <!-- имя -->
+                <Grid Height="50">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Enemy name:" Style="{StaticResource NameSpaceTextBlockStyle}"/>
+                    <TextBlock Grid.Column="1" x:Name="EnemyNameBlock" Text="{Binding Path = Name}" Style="{StaticResource NameSpaceTextBlockStyle}"/>
+                </Grid>
 
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Enemy name:"/>
-                <TextBlock Grid.Column="1" x:Name="EnemyNameBlock" Text="{Binding Path = Name}"/>
-            </Grid>
+                <!-- хп-->
+                <Grid Height="50">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Enemy HP:" Style="{StaticResource NameSpaceTextBlockStyle}"/>
+                    <TextBlock Grid.Column="1" x:Name="EnemyHPBlock" Text="{Binding Path = CurrentHitpoints}" Style="{StaticResource NameSpaceTextBlockStyle}"/>
+                </Grid>
 
-            <!-- хп-->
-            <Grid Grid.Row="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Enemy HP:"/>
-                <TextBlock Grid.Column="1" x:Name="EnemyHPBlock" Text="{Binding Path = CurrentHitpoints}"/>
-            </Grid>
-            
-
-            <!-- голда -->
-            <Grid Grid.Row="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Enemy gold:"/>
-                <TextBlock Grid.Column="1" x:Name="EnemyGoldBlock" Text="{Binding Path = GoldReward}"/>
-            </Grid>
+                <!-- голда -->
+                <Grid Height="50">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Enemy gold:" Style="{StaticResource NameSpaceTextBlockStyle}"/>
+                    <TextBlock Grid.Column="1" x:Name="EnemyGoldBlock" Text="{Binding Path = GoldReward}" Style="{StaticResource NameSpaceTextBlockStyle}"/>
+                </Grid>
+            </StackPanel>
         </Grid>
 
         <!--я с этими гридами знаете че делал....-->
@@ -72,17 +72,17 @@
             <Grid Name="IconGrid" Grid.Column="0" VerticalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="нажмите чтобы ударить злату и валеру" HorizontalAlignment="Center"></TextBlock>
-                <!--CLICK to deal DAMAGE!-->
-                <Button Grid.Row="1" Width="200" Background="Transparent" Click="Button_Click">
-                    <Image Name="scene" Source="{Binding Path=IconPath}"/>
+                <TextBlock Text="CLICK to deal DAMAGE!" HorizontalAlignment="Center" Style="{StaticResource NameSpaceTextBlockStyle}"></TextBlock>
+                <!--нажмите чтобы ударить злату и валеру-->
+                <Button Name="scene" Height="200" Width="200" Grid.Row="1" Background="Transparent" Click="Button_Click" Grid.RowSpan="2" VerticalAlignment="Top" Style="{x:Null}">
+                    <Image Source="{Binding Path=IconPath}"/>
                 </Button>
-                <UniformGrid Grid.Row="2" Columns="2" Height="50" Margin="10">
-                    <Button x:Name="ButtonRepeat" Content="REPEAT" Click="Repeat_Click"/>
-                    <Button x:Name="ButtonNext" Content="NEXT" Click="Next_Click"/>
+                <UniformGrid Grid.Row="2" Columns="2" Height="50" Margin="10,75,10,-55">
+                    <Button x:Name="ButtonRepeat" Content="REPEAT" Click="Repeat_Click" Style="{StaticResource ButtonStyle}"/>
+                    <Button x:Name="ButtonNext" Content="NEXT" Click="Next_Click" Style="{StaticResource ButtonStyle}"/>
                 </UniformGrid>
             </Grid>
 
@@ -102,12 +102,12 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Players level:"/>
-                    <TextBlock Grid.Column="2" x:Name="PlayerLvl" Text="{Binding Path = Lvl}"/>
+                    <TextBlock Grid.Column="0" Text="Players level:" Style="{StaticResource NameSpaceTextBlockStyle}"/>
+                    <TextBlock Grid.Column="2" x:Name="PlayerLvl" Text="{Binding Path = Lvl}" Style="{StaticResource NameSpaceTextBlockStyle}"/>
                 </Grid>
 
                 <Grid Grid.Row="2">
-                    <Button Content="UPGRADE" Click="UpgradeButton" x:Name="Upgrade"></Button>
+                    <Button Content="UPGRADE" Click="UpgradeButton" x:Name="Upgrade" Style="{StaticResource ButtonStyle}"></Button>
                 </Grid>
 
                 <!-- Злата игрока )))))))) -->
@@ -116,8 +116,8 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Players gold:"/>
-                    <TextBlock Grid.Column="1" x:Name="PlayerGold" Text="{Binding Path = Gold}"/>
+                    <TextBlock Grid.Column="0" Text="Players gold:" Style="{StaticResource NameSpaceTextBlockStyle}"/>
+                    <TextBlock Grid.Column="1" x:Name="PlayerGold" Text="{Binding Path = Gold}" Style="{StaticResource NameSpaceTextBlockStyle}"/>
                 </Grid>
 
                 <Grid Grid.Row="5">
@@ -125,8 +125,8 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Players damage:"/>
-                    <TextBlock Grid.Column="1" x:Name="PlayerDamage" Text="{Binding Path = Damage}"/>
+                    <TextBlock Grid.Column="0" Text="Players damage:" Style="{StaticResource NameSpaceTextBlockStyle}"/>
+                    <TextBlock Grid.Column="1" x:Name="PlayerDamage" Text="{Binding Path = Damage}" Style="{StaticResource NameSpaceTextBlockStyle}"/>
                 </Grid>
             </Grid>
         </Grid>

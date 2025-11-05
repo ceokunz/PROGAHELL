@@ -26,9 +26,9 @@ namespace laba_2
 
             var templates = new List<CEnemyTemplate>
             {
-                new CEnemyTemplate("Злата и Валера", "10", "5", 70, "C:\\Users\\SAPR\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\zlovalera.jfif"),
-                new CEnemyTemplate("Ядовитый и Летучий", "50", "20", 25, "C:\\Users\\SAPR\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\letuchiy.jfif"),
-                new CEnemyTemplate("Мы не знаем что это такое", "200", "100", 5, "C:\\Users\\SAPR\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\kurosvinka.jfif")
+                new CEnemyTemplate("KUNZ", "314", "10000000", 70, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\кунзик.png"),
+                new CEnemyTemplate("Ядовитый и Летучий", "50", "20", 25, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\кунзик.png"),
+                new CEnemyTemplate("Мы не знаем что это такое", "200", "100", 5, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\кунзик.png")
             };
 
             enemyManager = new EnemyTemplateManager();

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net9.0-windows7.0</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <RootNamespace>laba_2</RootNamespace>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -13,6 +13,10 @@
     <None Remove="monsters\kurosvinka.jfif" />
     <None Remove="monsters\letuchiy.jfif" />
     <None Remove="monsters\zlovalera.jfif" />
+    <None Remove="monsters\кунзик.png" />
+    <None Remove="Resources\button.png" />
+    <None Remove="Resources\gridback.png" />
+    <None Remove="Resources\minecraft.ttf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +29,16 @@
     <Resource Include="monsters\zlovalera.jfif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="monsters\кунзик.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\button.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\gridback.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\minecraft.ttf" />
   </ItemGroup>
 
 </Project>
