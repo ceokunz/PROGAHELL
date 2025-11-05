@@ -93,6 +93,12 @@ namespace laba_2
             var template = GetRandomEnemy();
             return CreateEnemyFromTemplate(template);
         }
+        public Enemy SpawnEnemyByName(string enemyName)
+        {
+            var template = enemies.FirstOrDefault(e => e.Name.Equals(enemyName, StringComparison.OrdinalIgnoreCase));
+            return CreateEnemyFromTemplate(template);
+        }
+
         public void Clear()
         {
             enemies.Clear();
