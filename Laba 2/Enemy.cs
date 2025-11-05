@@ -86,5 +86,10 @@ namespace laba_2
         {
             //говно
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -9,4 +9,22 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="monsters\kurosvinka.jfif" />
+    <None Remove="monsters\letuchiy.jfif" />
+    <None Remove="monsters\zlovalera.jfif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="monsters\kurosvinka.jfif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="monsters\letuchiy.jfif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="monsters\zlovalera.jfif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
 </Project>

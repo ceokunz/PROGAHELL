@@ -119,15 +119,15 @@ namespace laba_2
         public double SpawnChance { get; set; }
         public IconItem Icon { get; set; }
 
-        public CEnemyTemplate(string name, BigNumber maxHitpoints, BigNumber goldReward,
-                            double spawnChance, IconItem icon)
-        {
-            Name = name;
-            MaxHitpoints = maxHitpoints ?? throw new ArgumentNullException(nameof(maxHitpoints));
-            GoldReward = goldReward ?? throw new ArgumentNullException(nameof(goldReward));
-            SpawnChance = spawnChance;
-            Icon = icon;
-        }
+        //public CEnemyTemplate(string name, BigNumber maxHitpoints, BigNumber goldReward,
+        //                    double spawnChance, IconItem icon)
+        //{
+        //    Name = name;
+        //    MaxHitpoints = maxHitpoints ?? throw new ArgumentNullException(nameof(maxHitpoints));
+        //    GoldReward = goldReward ?? throw new ArgumentNullException(nameof(goldReward));
+        //    SpawnChance = spawnChance;
+        //    Icon = icon;
+        //}
 
         public CEnemyTemplate(string name, string maxHitpoints, string goldReward,
                             double spawnChance, string iconPath)

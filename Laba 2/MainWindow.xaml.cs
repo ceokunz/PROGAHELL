@@ -26,9 +26,9 @@ namespace laba_2
 
             var templates = new List<CEnemyTemplate>
             {
-                new CEnemyTemplate("Slime", "10", "5", 70, ""),
-                new CEnemyTemplate("Orc", "50", "20", 25, ""),
-                new CEnemyTemplate("Dragon", "200", "100", 5, "")
+                new CEnemyTemplate("Злата и Валера", "10", "5", 70, "C:\\Users\\SAPR\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\zlovalera.jfif"),
+                new CEnemyTemplate("Ядовитый и Летучий", "50", "20", 25, "C:\\Users\\SAPR\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\letuchiy.jfif"),
+                new CEnemyTemplate("Мы не знаем что это такое", "200", "100", 5, "C:\\Users\\SAPR\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\kurosvinka.jfif")
             };
 
             enemyManager = new EnemyTemplateManager();
@@ -37,11 +37,19 @@ namespace laba_2
 
             SpawnNewEnemy();
             UpdateUI();
+
+            PlayerGrid.DataContext = player; //
         }
 
         private void SpawnNewEnemy()
         {
             currentEnemy = enemyManager.CreateRandomEnemy();
+            
+            EnemyGrid.DataContext = currentEnemy; //
+            
+            IconGrid.DataContext = currentEnemy.Icon; //
+
+            
             if (currentEnemy == null)
             {
                 MessageBox.Show("No enemy templates available!");
@@ -91,16 +99,27 @@ namespace laba_2
 
         private void UpdateUI()
         {
-            PlayerLvl.Text = player.Lvl.ToString();
-            PlayerGold.Text = player.Gold.ToString();
-            PlayerDamage.Text = player.Damage.ToString();
+            //PlayerLvl.Text = player.Lvl.ToString();
+            //PlayerGold.Text = player.Gold.ToString();
+            //PlayerDamage.Text = player.Damage.ToString();
 
-            if (currentEnemy != null)
-            {
-                EnemyNameBlock.Text = currentEnemy.Name;
-                EnemyHPBlock.Text = currentEnemy.CurrentHitpoints.ToString();
-                EnemyGoldBlock.Text = currentEnemy.GoldReward.ToString();
-            }
+            //if (currentEnemy != null)
+            //{
+            //    EnemyNameBlock.Text = currentEnemy.Name;
+            //    EnemyHPBlock.Text = currentEnemy.CurrentHitpoints.ToString();
+            //    EnemyGoldBlock.Text = currentEnemy.GoldReward.ToString();
+            //}
+        }
+
+        private void UpgradeButton(object sender, RoutedEventArgs e)
+        {
+            return;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("jopa", "434");
+            currentEnemy.TakeDamage(player.Damage, out BigNumber reward);
         }
     }
 }

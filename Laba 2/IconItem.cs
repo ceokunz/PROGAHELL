@@ -19,5 +19,6 @@ namespace laba_2
 
             IconName = m.Last();
         }
+
     }
 }
