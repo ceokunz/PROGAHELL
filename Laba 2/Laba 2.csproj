@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="monsters\alex.png" />
     <None Remove="monsters\kurosvinka.jfif" />
     <None Remove="monsters\letuchiy.jfif" />
     <None Remove="monsters\zlovalera.jfif" />
@@ -20,6 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="monsters\alex.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="monsters\kurosvinka.jfif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

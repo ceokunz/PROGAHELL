@@ -26,8 +26,9 @@ namespace laba_2
 
             var templates = new List<CEnemyTemplate>
             {
-                new CEnemyTemplate("KUNZ", "314", "10000000", 70, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\кунзик.png"),
-                new CEnemyTemplate("Ядовитый и Летучий", "50", "20", 25, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\кунзик.png"),
+                new CEnemyTemplate("Valera", "35", "10000000", 70, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\кунзик.png"),
+                new CEnemyTemplate("Zlata", "35", "10000000", 70, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\кунзик.png"),
+                new CEnemyTemplate("Sergey Alexeevich", "700", "10000000", 90, "C:\\Users\\user\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\alex.png"),
                 new CEnemyTemplate("Мы не знаем что это такое", "200", "100", 5, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\кунзик.png")
             };
 
