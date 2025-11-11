@@ -5,29 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:laba_2"
         mc:Ignorable="d"
-        Title="PROGAHELL" Height="450" Width="800">
+        Title="PROGAHELL" Height="450" Width="700">
 
     <!--Вонючки-говнючки колонки-->
 
     <Grid Background="#FFB9D9CF">
-        
-
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
         <!--БОЛЬШЕ ГРИДОВ БОГУ ГРИДОВ-->
 
-        <Grid x:Name="EnemyGrid" Grid.Column="0" Margin="10">
-            <!--<Grid.Background>
-                <ImageBrush ImageSource="C:\Users\izzzz\source\repos\ceokunz\PROGAHELL\laba 2\Resources\gridback.png" 
-                    Stretch="Uniform"
-                            Opacity="0.5"/>
-            </Grid.Background>-->
-
-            <!-- StackPanel с вертикальным центрированием -->
+        <Grid x:Name="EnemyGrid" Grid.Column="0" Margin="10" Background="#FF97BFB6">
+            
             <StackPanel VerticalAlignment="Center">
                 <!-- имя -->
                 <Grid Height="50">
@@ -70,88 +61,83 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Name="IconGrid" Grid.Column="0" VerticalAlignment="Center">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <TextBlock Text="CLICK to deal DAMAGE!" HorizontalAlignment="Center" Style="{StaticResource PropertyBlocks}"></TextBlock>
-                <!--нажмите чтобы ударить злату и валеру-->
-                <Button Name="scene" Height="200" Width="200" Grid.Row="1" Background="Transparent" Click="Button_Click" Grid.RowSpan="2" VerticalAlignment="Top" Style="{x:Null}" BorderBrush="{x:Null}">
-                    <Image Source="{Binding Path=IconPath}"/>
-                </Button>
-                <UniformGrid Grid.Row="2" Columns="2" Height="50" Margin="10,75,10,-55">
-                    <Button x:Name="ButtonRepeat" Content="REPEAT" Click="Repeat_Click" Style="{StaticResource ButtonStyle}"/>
-                    <Button x:Name="ButtonNext" Content="NEXT" Click="Next_Click" Style="{StaticResource ButtonStyle}"/>
-                </UniformGrid>
-            </Grid>
-
-            <Grid x:Name="PlayerGrid" Grid.Column="2" Margin="10" VerticalAlignment="Center">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="50"/>
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Players level:" Style="{StaticResource PropertyBlocks}"/>
-                    <TextBlock Grid.Column="2" x:Name="PlayerLvl" Text="{Binding Path = Lvl}" Style="{StaticResource NameBoxes}"/>
+            <StackPanel VerticalAlignment="Center">
+                <Grid Name="IconGrid" Grid.Column="0" VerticalAlignment="Center" Background="#FF97BFB6">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="CLICK to deal DAMAGE!" HorizontalAlignment="Center" Style="{StaticResource PropertyBlocks}"></TextBlock>
+                    <!--нажмите чтобы ударить злату и валеру-->
+                    <Button Name="scene" Height="200" Width="200" Grid.Row="1" Background="Transparent" 
+                        Click="Button_Click" Grid.RowSpan="2" VerticalAlignment="Top" 
+                        Style="{StaticResource ImageButtonStyle}" BorderBrush="{x:Null}">
+                        <Image x:Name="EnemyImage" Source="{Binding Path=IconPath}" Stretch="Uniform"/>
+                    </Button>
+                    <UniformGrid Grid.Row="2" Columns="2" Height="50" Margin="10,75,10,-55">
+                        <Button x:Name="ButtonRepeat" Content="REPEAT" Click="Repeat_Click" Style="{StaticResource ButtonStyle}"/>
+                        <Button x:Name="ButtonNext" Content="NEXT" Click="Next_Click" Style="{StaticResource ButtonStyle}"/>
+                    </UniformGrid>
                 </Grid>
+            </StackPanel>
 
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="22*"/>
-                        <ColumnDefinition Width="181*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Content="UPGRADE" Click="UpgradeButton" x:Name="Upgrade" Style="{StaticResource ButtonStyle}" Grid.ColumnSpan="2" Margin="5,5,5,5"></Button>
-                </Grid>
+            <StackPanel VerticalAlignment="Center" Grid.Column="2">
+                <Grid x:Name="PlayerGrid" Margin="10" VerticalAlignment="Center" Background="#FF97BFB6">
+                    <StackPanel>
+                        <Grid Height="50" Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Players level:" Style="{StaticResource PropertyBlocks}"/>
+                            <TextBlock Grid.Column="1" x:Name="PlayerLvl" Text="{Binding Path = Lvl}" Style="{StaticResource NameBoxes}"/>
+                        </Grid>
 
-                <!-- Злата игрока )))))))) -->
-                <Grid Grid.Row="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Players gold:" Style="{StaticResource PropertyBlocks}"/>
-                    <TextBlock Grid.Column="1" x:Name="PlayerGold" Text="{Binding Path = Gold}" Style="{StaticResource NameBoxes}"/>
-                </Grid>
+                        <Grid Height="50" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="22*"/>
+                                <ColumnDefinition Width="181*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="UPGRADE" Click="UpgradeButton" x:Name="Upgrade" Style="{StaticResource ButtonStyle}" Grid.ColumnSpan="2" Margin="5,5,5,5"></Button>
+                        </Grid>
 
-                <Grid Grid.Row="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="UpgradeCost:" Style="{StaticResource PropertyBlocks}"/>
-                    <TextBlock Grid.Column="1" x:Name="UpgradeCost" Text="{Binding Path = UpgradeCost}" Style="{StaticResource NameBoxes}"/>
-                </Grid>
+                        <!-- Злата игрока )))))))) -->
+                        <Grid Height="50" Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Players gold:" Style="{StaticResource PropertyBlocks}"/>
+                            <TextBlock Grid.Column="1" x:Name="PlayerGold" Text="{Binding Path = Gold}" Style="{StaticResource NameBoxes}"/>
+                        </Grid>
 
-                <Grid Grid.Row="7">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Players damage:" Style="{StaticResource PropertyBlocks}"/>
-                    <TextBlock Grid.Column="1" x:Name="PlayerDamage" Text="{Binding Path = Damage}" Style="{StaticResource NameBoxes}"/>
+                        <Grid Height="50" Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="UpgradeCost:" Style="{StaticResource PropertyBlocks}"/>
+                            <TextBlock Grid.Column="1" x:Name="UpgradeCost" Text="{Binding Path = UpgradeCost}" Style="{StaticResource NameBoxes}"/>
+                        </Grid>
+
+                        <Grid Height="50" Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Players damage:" Style="{StaticResource PropertyBlocks}"/>
+                            <TextBlock Grid.Column="1" x:Name="PlayerDamage" Text="{Binding Path = Damage}" Style="{StaticResource NameBoxes}"/>
+                        </Grid>
+                    </StackPanel>
                 </Grid>
-            </Grid>
+            </StackPanel>
         </Grid>
 
-        <!--<MediaElement Name="VideoControl"
-                      Source="C:\true_end.wmv"
-                      LoadedBehavior="Manual"
-                      UnloadedBehavior="Stop"
-                      Visibility="Collapsed"
-                      MediaEnded="VideoControl_MediaEnded"/>-->
+        <Grid x:Name="SplashGrid" Background="Transparent" Visibility="Visible" Opacity="0" Grid.ColumnSpan="2">
+            <Viewbox Stretch="Uniform" MaxWidth="500" MaxHeight="400" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image Source="/Resources/splash.png" Stretch="Uniform"/>
+            </Viewbox>
+        </Grid>
     </Grid>
 </Window>

@@ -15,6 +15,7 @@
 
     <Style x:Key="PropertyBlocks" TargetType="TextBlock">
         <Setter Property="Foreground" Value="#2F4F4F"/>
+        <Setter Property="Background" Value="#F0FFF0"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="FontFamily" Value="OCR A Extended"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -123,13 +124,80 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ImageButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+    <Style x:Key="ImageButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Background="Transparent">
-                        <ContentPresenter/>
+                    <Border Name="border" Background="{TemplateBinding Background}"
+                        RenderTransformOrigin="0.5,0.5">
+                        <!-- ВАЖНО -->
+                        <Border.RenderTransform>
+                            <ScaleTransform x:Name="borderScale" ScaleX="1" ScaleY="1"/>
+                        </Border.RenderTransform>
+                        <ContentPresenter HorizontalAlignment="Center" 
+                                      VerticalAlignment="Center"
+                                      TextBlock.Foreground="{TemplateBinding Foreground}"
+                                      TextBlock.FontFamily="{TemplateBinding FontFamily}"
+                                      TextBlock.FontSize="{TemplateBinding FontSize}"/>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Анимация при наведении -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="borderScale"
+                                                     Storyboard.TargetProperty="ScaleX"
+                                                     To="1.05" Duration="0:0:0.1"/>
+                                        <DoubleAnimation Storyboard.TargetName="borderScale"
+                                                     Storyboard.TargetProperty="ScaleY"
+                                                     To="1.05" Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="borderScale"
+                                                     Storyboard.TargetProperty="ScaleX"
+                                                     To="1" Duration="0:0:0.1"/>
+                                        <DoubleAnimation Storyboard.TargetName="borderScale"
+                                                     Storyboard.TargetProperty="ScaleY"
+                                                     To="1" Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <!-- Анимация при нажатии -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="borderScale"
+                                                     Storyboard.TargetProperty="ScaleX"
+                                                     To="0.95" Duration="0:0:0.05"/>
+                                        <DoubleAnimation Storyboard.TargetName="borderScale"
+                                                     Storyboard.TargetProperty="ScaleY"
+                                                     To="0.95" Duration="0:0:0.05"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="borderScale"
+                                                     Storyboard.TargetProperty="ScaleX"
+                                                     To="1" Duration="0:0:0.1"/>
+                                        <DoubleAnimation Storyboard.TargetName="borderScale"
+                                                     Storyboard.TargetProperty="ScaleY"
+                                                     To="1" Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
