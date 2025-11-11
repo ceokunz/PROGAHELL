@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace laba_2
 {
-    public class Enemy
+    public class Enemy : INotifyPropertyChanged
     {
         private string name;
         private BigNumber maxHitpoints;
@@ -15,6 +17,13 @@ namespace laba_2
         private bool isDead;
         private IconItem icon;
 
+        //////////////////////////////////////////////////////////////////////////
+        
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public string Name
         {
             get { return name; }
@@ -24,7 +33,14 @@ namespace laba_2
         public BigNumber MaxHitpoints
         {
             get { return maxHitpoints;}
-            private set { maxHitpoints = value; }
+            private set
+            {
+                 if (maxHitpoints != value)
+                 {
+                 maxHitpoints = value;
+                 OnPropertyChanged(nameof(MaxHitpoints));
+                 }
+            }
         }
 
         public BigNumber GoldReward

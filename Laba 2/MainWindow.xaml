@@ -9,7 +9,8 @@
 
     <!--Вонючки-говнючки колонки-->
 
-    <Grid>
+    <Grid Background="#FFB9D9CF">
+        
 
 
         <Grid.ColumnDefinitions>
@@ -20,11 +21,11 @@
         <!--БОЛЬШЕ ГРИДОВ БОГУ ГРИДОВ-->
 
         <Grid x:Name="EnemyGrid" Grid.Column="0" Margin="10">
-            <Grid.Background>
-                <ImageBrush ImageSource="C:\Users\user\Source\Repos\ceokunz\PROGAHELL\laba 2\Resources\gridback.png" 
+            <!--<Grid.Background>
+                <ImageBrush ImageSource="C:\Users\izzzz\source\repos\ceokunz\PROGAHELL\laba 2\Resources\gridback.png" 
                     Stretch="Uniform"
                             Opacity="0.5"/>
-            </Grid.Background>
+            </Grid.Background>-->
 
             <!-- StackPanel с вертикальным центрированием -->
             <StackPanel VerticalAlignment="Center">

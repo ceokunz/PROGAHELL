@@ -39,7 +39,7 @@
                     <Border Name="border" Background="Transparent">
                         <Grid>
                             <Image Name="buttonImage" 
-                               Source="C:\Users\user\Source\Repos\ceokunz\PROGAHELL\laba 2\Resources\button.png" 
+                               Source="/Resources/button.png" 
                                Stretch="Uniform"
                                RenderTransformOrigin="0.5,0.5">
                                 <Image.RenderTransform>

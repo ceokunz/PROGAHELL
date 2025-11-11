@@ -13,6 +13,8 @@
     <None Remove="monsters\alex.png" />
     <None Remove="monsters\kurosvinka.jfif" />
     <None Remove="monsters\letuchiy.jfif" />
+    <None Remove="monsters\max.png" />
+    <None Remove="monsters\zlata.png" />
     <None Remove="monsters\zlovalera.jfif" />
     <None Remove="monsters\кунзик.png" />
     <None Remove="Resources\button.png" />
@@ -28,6 +30,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="monsters\letuchiy.jfif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="monsters\max.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="monsters\zlata.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="monsters\zlovalera.jfif">
