@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace laba_2
 {
-    public class Player
+    public class Player : INotifyPropertyChanged
     {
         int lvl;
         BigNumber gold;
@@ -15,21 +16,48 @@ namespace laba_2
         BigNumber upgradeCost;
         double upgradeModifier;
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public int Lvl
         {
             get { return lvl; }
-            private set { lvl = value; }    
+            private set 
+            {
+                if (lvl != value)
+                {
+                    lvl = value;
+                    OnPropertyChanged(nameof(Lvl));
+                }
+            }    
         }
         public BigNumber Gold
         {
             get { return gold; }
-            private set { gold = value; }
+            private set 
+            {
+                if (gold == null || !gold.Equals(value))
+                {
+                    gold = value;
+                    OnPropertyChanged(nameof(Gold));
+                }
+            }
         }
 
         public BigNumber Damage
         {
             get { return damage; }
-            private set {  damage = value; }
+            private set 
+            {
+                if (damage == null || !damage.Equals(value))
+                {
+                    damage = value;
+                    OnPropertyChanged(nameof(Damage));
+                }
+            }
         }
         public long DamageModifier
         {
@@ -39,7 +67,14 @@ namespace laba_2
         public BigNumber UpgradeCost
         {
             get {  return upgradeCost; }
-            private set { upgradeCost = value; }
+            private set 
+            {
+                if (upgradeCost == null || !upgradeCost.Equals(value))
+                {
+                    upgradeCost = value;
+                    OnPropertyChanged(nameof(UpgradeCost));
+                }
+            }
         }
         public double UpgradeModifier
         {
@@ -59,25 +94,25 @@ namespace laba_2
 
         public bool AddGold(BigNumber amount)
         {
-            gold = gold.Add(amount);
+            Gold = Gold.Add(amount);
             return true;
         }
 
         public bool TryUpgrade()
         {
-            if (gold.CompareTo(upgradeCost) < 0)
+            if (Gold.CompareTo(UpgradeCost) < 0)
                 return false;
 
-            gold = gold.Subtract(upgradeCost);
+            Gold = Gold.Subtract(UpgradeCost);
 
-            damage = damage.Multiply(damageModifier);
+            Damage = Damage.Multiply(DamageModifier);
 
-            lvl++;
+            Lvl++;
 
-            BigNumber multiplier = new BigNumber(upgradeModifier.ToString("F0"));
+            BigNumber multiplier = new BigNumber(UpgradeModifier.ToString("F0"));
 
-            long nextMult = (long)Math.Round(upgradeModifier * lvl);
-            upgradeCost = upgradeCost.Multiply(nextMult);
+            long nextMult = (long)Math.Round(UpgradeModifier * Lvl);
+            UpgradeCost = UpgradeCost.Multiply(nextMult);
 
             return true;
         }
@@ -107,6 +142,14 @@ namespace laba_2
         {
             throw new NotImplementedException();
 
+        }
+        public void ResetToDefault()
+        {
+            Lvl = 1;
+            Gold = new BigNumber("0");
+            Damage = new BigNumber("1");
+
+            UpgradeCost = new BigNumber("10");
         }
     }
 }

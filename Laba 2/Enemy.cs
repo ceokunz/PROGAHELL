@@ -52,7 +52,14 @@ namespace laba_2
         public BigNumber CurrentHitpoints
         {
             get { return currentHitpoints;}
-            private set { currentHitpoints = value; }
+            private set 
+            {
+                if (currentHitpoints != value)
+                {
+                    currentHitpoints = value;
+                    OnPropertyChanged(nameof(CurrentHitpoints));
+                }
+            }
         }
 
         public bool IsDead
@@ -83,19 +90,21 @@ namespace laba_2
         {
             goldReward = new BigNumber("0");
 
-            if (isDead) return false;
+            if (IsDead) return false;
 
-            currentHitpoints = currentHitpoints.Subtract(dmg);
-
-            if (currentHitpoints.CompareTo(new BigNumber("0")) <= 0)
+            if (dmg.CompareTo(CurrentHitpoints) >= 0)
             {
-                isDead = true;
-                currentHitpoints = new BigNumber("0");
-                goldReward = this.goldReward;
+                // УМИРАЕМ =)))
+                CurrentHitpoints = new BigNumber("0");
+                IsDead = true;
+                goldReward = this.GoldReward;
                 return true;
             }
-
-            return false;
+            else
+            {
+                CurrentHitpoints = CurrentHitpoints.Subtract(dmg);
+                return false;
+            }
         }
 
         private void Die()

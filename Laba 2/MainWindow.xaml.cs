@@ -26,10 +26,10 @@ namespace laba_2
 
             var templates = new List<CEnemyTemplate>
             {
-                new CEnemyTemplate("Valera", "10", "3", 70, "C:\\Users\\izzzz\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\кунзик.png"),
-                new CEnemyTemplate("Zlata", "10", "3", 70, "C:\\Users\\izzzz\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\zlata.png"),
-                new CEnemyTemplate("Sergey Alexeevich", "700", "10000000", 40, "C:\\Users\\izzzz\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\alex.png"),
-                new CEnemyTemplate("Maxim Urich", "700", "10000000", 40, "C:\\Users\\izzzz\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\max.png")
+                new CEnemyTemplate("Valera", "1", "3", 80, "C:\\Users\\izzzz\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\кунзик.png"),
+                new CEnemyTemplate("Zlata", "1", "3", 80, "C:\\Users\\izzzz\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\zlata.png"),
+                new CEnemyTemplate("Sergey Alexeevich", "666", "10000000", 20, "C:\\Users\\izzzz\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\alex.png"),
+                new CEnemyTemplate("Maxim Urich", "999", "10000000", 10, "C:\\Users\\izzzz\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\max.png")
             };
 
             enemyManager = new EnemyTemplateManager();
@@ -37,7 +37,7 @@ namespace laba_2
             enemyManager.NormalizeChances();
 
             SpawnNewEnemy();
-            UpdateUI();
+
 
             PlayerGrid.DataContext = player; //
         }
@@ -57,10 +57,48 @@ namespace laba_2
                 return;
             }
 
-            UpdateUI();
         }
 
-        private void scene_MouseDown(object sender, MouseButtonEventArgs e)
+        //private void scene_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (currentEnemy == null || currentEnemy.IsDead)
+        //        return;
+
+        //    bool isDead = currentEnemy.TakeDamage(player.Damage, out BigNumber reward);
+        //    player.AddGold(reward);
+
+        //    if (isDead)
+        //    {
+        //        SpawnNewEnemy();
+        //    }
+
+        //}
+
+        private void UpgradeButton(object sender, RoutedEventArgs e)
+        {
+            if (player.TryUpgrade())
+            {
+
+            }
+            else
+            {
+                MessageBox.Show("Not enough gold to upgrade!");
+            }
+        }
+
+        private void Repeat_Click(object sender, RoutedEventArgs e)
+        {
+            player.ResetToDefault();
+            SpawnNewEnemy();
+        }
+
+        private void Next_Click(object sender, RoutedEventArgs e)
+        {
+            SpawnNewEnemy();
+        }
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (currentEnemy == null || currentEnemy.IsDead)
                 return;
@@ -72,55 +110,6 @@ namespace laba_2
             {
                 SpawnNewEnemy();
             }
-
-            UpdateUI();
-        }
-
-        private void UpgradeButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (player.TryUpgrade())
-            {
-                UpdateUI();
-            }
-            else
-            {
-                MessageBox.Show("Not enough gold to upgrade!");
-            }
-        }
-
-        private void Repeat_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void Next_Click(object sender, RoutedEventArgs e)
-        {
-            SpawnNewEnemy();
-        }
-
-        private void UpdateUI()
-        {
-            //PlayerLvl.Text = player.Lvl.ToString();
-            //PlayerGold.Text = player.Gold.ToString();
-            //PlayerDamage.Text = player.Damage.ToString();
-
-            //if (currentEnemy != null)
-            //{
-            //    EnemyNameBlock.Text = currentEnemy.Name;
-            //    EnemyHPBlock.Text = currentEnemy.CurrentHitpoints.ToString();
-            //    EnemyGoldBlock.Text = currentEnemy.GoldReward.ToString();
-            //}
-        }
-
-        private void UpgradeButton(object sender, RoutedEventArgs e)
-        {
-            return;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("jopa", "434");
-            currentEnemy.TakeDamage(player.Damage, out BigNumber reward);
         }
     }
 }
