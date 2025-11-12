@@ -35,10 +35,12 @@ namespace laba_2
 
             var templates = new List<CEnemyTemplate>
             {
-                new CEnemyTemplate("Valera", "20", "3", 80, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\val.png"),
-                new CEnemyTemplate("Zlata", "60", "3", 60, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\zlata.png"),
-                new CEnemyTemplate("Sergey Alexeevich", "666", "10000000", 20, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\alex.png"),
-                new CEnemyTemplate("Maxim Urich", "999", "10000000", 10, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\max.png")
+                new CEnemyTemplate("Valera", "20", "3", 80, "C:\\Users\\SAPR\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\val.png"),
+                new CEnemyTemplate("Zlata", "60", "3", 60, "C:\\Users\\SAPR\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\zlata.png"),
+                new CEnemyTemplate("Sergey Alexeevich", "666", "10000000", 20, "C:\\Users\\SAPR\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\alex.png"),
+                new CEnemyTemplate("Maxim Urich", "999", "10000000", 10, "C:\\Users\\SAPR\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\max.png")
+
+
                 //new CEnemyTemplate("Valera", "20", "3", 80, "C:\\Users\\izzzz\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\кунзик.png"),
                 //new CEnemyTemplate("Zlata", "20", "3", 80, "C:\\Users\\izzzz\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\zlata.png"),
                 //new CEnemyTemplate("Sergey Alexeevich", "666", "10000000", 20, "C:\Users\user\Source\Repos\ceokunz\PROGAHELL\laba 2\monsters\alex.png"),
