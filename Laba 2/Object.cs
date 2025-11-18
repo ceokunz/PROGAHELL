@@ -28,24 +28,26 @@ namespace laba_2
         }
         public CObject(Point position, double size, double lifetime)
         {
-            
+
         }
         public bool isMouseOnObject(Point mousePosition)
         {
-            
+            return null;
         }
         public Ellipse getSprite()
-        { 
+        {
+            return null;
         }
         public double getPointsValue()
         {
+            return null;
         }
         public bool updateLifetime(double delta)
         {
-
+            return null;
         }
 
 
     }
-    
+
 }
