@@ -14,7 +14,9 @@ namespace laba_2
         public CSpawnRateChanger(Point position, double size, double lifetime, double speedModifier)
         {
         }
-        public onClick bool (CPlayer player, CController controller, Point mouseposition)
+        public bool onClick (CPlayer player, CCollectable controller, Point mouseposition)
+        {
+        }
     }
     
 
