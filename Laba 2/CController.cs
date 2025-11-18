@@ -8,12 +8,8 @@ using System.Windows.Navigation;
 
 namespace laba_2
 {
-    public class CController
+    public class CCollectable
     {
-        public class CObject
-        {
-
-        }
 
         private List<CObject> objects;
 
@@ -78,7 +74,7 @@ namespace laba_2
             private set { points = value; }
         }
 
-        public CObject(double spawnRate, int startTime, Size sceneSize)
+        public CCollectable(double spawnRate, int startTime, Size sceneSize)
         {
             spawnRate = SpawnRate;
             startTime = StartTime;

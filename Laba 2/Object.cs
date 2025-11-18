@@ -8,7 +8,7 @@ using System.Windows.Shapes;
 
 namespace laba_2
 {
-    public class Object
+    public class CObject
     {
         private Point position;
         private Size size;
@@ -26,7 +26,7 @@ namespace laba_2
             get { return pointsValue; }
             private set { pointsValue = value; }
         }
-        public Cobject(Point position, double size, double lifetime)
+        public CObject(Point position, double size, double lifetime)
         {
             
         }
