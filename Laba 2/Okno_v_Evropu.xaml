@@ -7,6 +7,55 @@
         mc:Ignorable="d"
         Title="Okno_v_Evropu" Height="450" Width="800">
     <Grid>
-        
+        <!--больше гридов богу гридов-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
+                <Button x:Name="startButton" Content="Start" Height="45" Width="80"/>
+                <Border Height="45" Width="80" Margin="10,0,0,0" HorizontalAlignment="Left">
+                    <TextBlock Text="Ready!" TextAlignment="Center" VerticalAlignment="Center"/>
+                </Border> <!--а почему оно не выравнивается это как то тупо я получается тупой?-->
+            </StackPanel>
+
+            <Slider Grid.Row="1" x:Name="Slider" Margin="10" VerticalAlignment="Center"/>
+
+            <ListBox Grid.Row="2" x:Name="ListBox" Margin="10"/>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <TextBlock Text="Score:"/>
+                    <TextBlock x:Name="ScoreBlock" Text="0" Margin="5,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Text="Time:"/>
+                    <TextBlock x:Name="TimeBlock" Text="0" Margin="5,0,0,0"/>
+                </StackPanel>
+            </Grid>
+
+            <Canvas Grid.Row="1" x:Name="scene" Margin="10" Background="LightGray"/>
+        </Grid>
     </Grid>
 </Window>

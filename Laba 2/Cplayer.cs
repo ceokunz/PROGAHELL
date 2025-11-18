@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace laba_2
 {
-    public class Cplayer
+    public class CPlayer
     {
         private bool canClick;
         private double timeBeforeClick;
         private CCountdownTimer countdownTimer;
 
-        public Cplayer (double timeBeforeClick)
+        public CPlayer (double timeBeforeClick)
         {
 
         }
