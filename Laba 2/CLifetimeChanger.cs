@@ -11,12 +11,12 @@ namespace laba_2
     {
         private double lifetimeModifier;
 
-        public CCollectable(Point position, double size, double lifetime, double speedModifier)
+        public CLifetimeChanger(Point position, double size, double lifetime, double speedModifier)
         {
 
         }
 
-        public bool onClick(CPlayer player, CController controller, Point mousePosition)
+        public bool onClick(CPlayer player, CCollectable controller, Point mousePosition)
         {
             return false;
         }
