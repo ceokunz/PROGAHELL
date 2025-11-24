@@ -100,19 +100,21 @@ namespace laba_2
             }
         }
 
-        public void MouseClick(Point mousePos)
+        public bool MouseClick(Point mousePos, CPlayer player)
         {
-            if (!Player.CanClick()) return;
+            if (!Player.CanClick()) return false;
+
             Player.PerformClick();
 
             for (int i = objects.Count - 1; i >= 0; i--)
             {
-                if (objects[i].OnClick(Player, this, mousePos))
+                if (objects[i].onClick(player, this, mousePos))
                 {
                     objects.RemoveAt(i);
-                    break;
+                    return true; 
                 }
             }
+            return false; 
         }
 
         public List<CCollectable> GetObjects() => new List<CCollectable>(objects);

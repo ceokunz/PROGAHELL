@@ -19,7 +19,6 @@ namespace laba_2
             sprite.Fill = Brushes.Yellow;
         }
 
-        public override double GetPointsValue() => 0;
         public override bool IsMouseOnObject(Point mousePosition)
         {
             double dx = mousePosition.X - position.X;

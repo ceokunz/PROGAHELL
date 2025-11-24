@@ -17,6 +17,10 @@ namespace laba_2
         double upgradeModifier;
         private CPlayer clickHandler;
 
+        private double baseCooldown = 1.0;
+        private double currentCooldown;
+        private double cooldownTimer;
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -92,7 +96,10 @@ namespace laba_2
             upgradeCost = UpgradeCost;
             upgradeModifier = UpgradeModifier;
 
+            currentCooldown = baseCooldown;
+            cooldownTimer = 0;
             clickHandler = new CPlayer(baseCooldown: 1.0); //опаааа
+
         }
 
         public bool AddGold(BigNumber amount)
@@ -131,19 +138,24 @@ namespace laba_2
 
         public void UpdateClickCooldown(double delta)
         {
-            clickHandler.Update(delta);
+            if (cooldownTimer > 0)
+                cooldownTimer -= delta;
+            cooldownTimer = Math.Max(0, cooldownTimer);
         }
 
-        public bool CanClick() => clickHandler.CanClick();
+        public bool CanClick() => cooldownTimer <= 0;
 
         public void PerformClick()
         {
-            clickHandler.PerformClick();
+            if (CanClick())
+                cooldownTimer = currentCooldown;
         }
 
         public void IncreaseClickSpeed(double reduction)
         {
-            clickHandler.IncreaseClickSpeed(reduction);
+            currentCooldown = Math.Max(0.1, currentCooldown - reduction);
         }
+
+        public double GetRemainingCooldown() => cooldownTimer;
     }
 }

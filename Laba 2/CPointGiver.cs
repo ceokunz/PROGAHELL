@@ -12,7 +12,7 @@ namespace laba_2
 {
     public class CPointGiver : CCollectable
     {
-        private double pointsValue;
+        private readonly double pointsValue;
 
         public CPointGiver(Point position, double size, double lifetime)
             : base(position, size, lifetime)
@@ -21,19 +21,9 @@ namespace laba_2
             pointsValue = (1.0 / size) / lifetime * 1000.0;
         }
 
-        public override double GetPointsValue() => pointsValue;
-
-        public override bool IsMouseOnObject(Point mousePosition)
+        public override bool onClick(CPlayer player, CController controller, Point mousePosition)
         {
-            double dx = mousePosition.X - (position.X);
-            double dy = mousePosition.Y - (position.Y);
-            double radius = size.Width / 2;
-            return dx * dx + dy * dy <= radius * radius;
-        }
-
-        public override bool OnClick(CPlayer player, CController controller, Point mousePosition)
-        {
-            if (!IsMouseOnObject(mousePosition)) return false;
+            if (!isMouseOnObject(mousePosition)) return false;
             controller.AddPoints(pointsValue);
             return true;
         }

@@ -14,14 +14,17 @@ namespace laba_2
         private Player player;
         private Enemy currentEnemy;
         private EnemyTemplateManager enemyManager;
+        private CController controller;
 
         private Viewbox splashViewbox;
+
+        //бонусы абобусы
 
         private List<CCollectable> bonusObjects = new List<CCollectable>();
         private DispatcherTimer bonusTimer;
         private Random rng = new Random();
-        private double bonusSpawnRate = 3.0; // каждые 3 сек
-        private double bonusTimerAccum = 0;
+        private double bonusSpawnRate = 3.0;
+        private double bonusSpawnAccum = 0;
 
         public MainWindow()
         {
@@ -59,6 +62,9 @@ namespace laba_2
 
             SpawnNewEnemy();
 
+            var sceneSize = new Size(scene.ActualWidth, scene.ActualHeight);
+            controller = new CController(spawnRate: 3.0, startTime: 0.0, sceneSize: sceneSize);
+
             bonusTimer = new DispatcherTimer();
             bonusTimer.Interval = TimeSpan.FromMilliseconds(100);
             bonusTimer.Tick += BonusTimer_Tick;
@@ -72,20 +78,20 @@ namespace laba_2
             const double delta = 0.1;
             player.UpdateClickCooldown(delta);
 
-            bonusTimerAccum -= delta;
-            if (bonusTimerAccum <= 0)
+            bonusSpawnAccum -= delta;
+            if (bonusSpawnAccum <= 0)
             {
                 SpawnBonusObject();
-                bonusTimerAccum = bonusSpawnRate;
+                bonusSpawnAccum = bonusSpawnRate;
             }
 
             for (int i = bonusObjects.Count - 1; i >= 0; i--)
             {
-                if (bonusObjects[i].UpdateLifetime(delta))
+                var obj = bonusObjects[i];
+                if (obj.UpdateLifetime(delta))
                 {
-                    var sprite = bonusObjects[i].Sprite;
-                    if (BonusCanvas.Children.Contains(sprite))
-                        BonusCanvas.Children.Remove(sprite);
+                    if (BonusCanvas.Children.Contains(obj.Sprite))
+                        BonusCanvas.Children.Remove(obj.Sprite);
                     bonusObjects.RemoveAt(i);
                 }
             }
@@ -94,13 +100,42 @@ namespace laba_2
                 CooldownBlock.Text = player.GetRemainingCooldown().ToString("F2");
         }
 
+        private void SpawnBonusObject()
+        {
+            double sceneWidth = scene.ActualWidth;
+            double sceneHeight = scene.ActualHeight;
+
+            if (sceneWidth <= 0 || sceneHeight <= 0) return;
+
+            double maxSize = 30;
+            double x = rng.NextDouble() * (sceneWidth - maxSize) + maxSize / 2;
+            double y = rng.NextDouble() * (sceneHeight - maxSize) + maxSize / 2;
+            Point pos = new Point(x, y);
+
+            double size = rng.NextDouble() * 20 + 10; 
+            double lifetime = rng.NextDouble() * 4 + 1; 
+
+            CCollectable obj = null;
+            double r = rng.NextDouble();
+
+            if (r < 0.6) obj = new CPointGiver(pos, size, lifetime);
+            else if (r < 0.8) obj = new CClickSpeedUp(pos, size, lifetime);
+            else obj = new CSpawnRateChanger(pos, size, lifetime);
+
+            if (obj != null)
+            {
+                bonusObjects.Add(obj);
+                BonusCanvas.Children.Add(obj.Sprite);
+            }
+        }
+
         private void SpawnNewEnemy()
         {
             currentEnemy = enemyManager.CreateRandomEnemy();
 
-            EnemyGrid.DataContext = currentEnemy; //
+            EnemyGrid.DataContext = currentEnemy; 
 
-            IconGrid.DataContext = currentEnemy.Icon; //
+            IconGrid.DataContext = currentEnemy.Icon; 
 
             AnimateJump();
             if (currentEnemy == null)
@@ -138,16 +173,28 @@ namespace laba_2
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (currentEnemy == null || currentEnemy.IsDead)
-                return;
+            if (!player.CanClick()) return;
 
-            bool isDead = currentEnemy.TakeDamage(player.Damage, out BigNumber reward);
-            player.AddGold(reward);
+            Point mousePos = Mouse.GetPosition(BonusCanvas); // ✅ Правильно!
 
-            if (isDead)
+            // Сначала проверяем бонусы через controller
+            if (controller.MouseClick(mousePos, player))
             {
-                AnimateJump();
-                SpawnNewEnemy();
+                // Клик попал по бонусу — ничего не делаем с врагом
+                return;
+            }
+
+            // Иначе — бьём врага
+            player.PerformClick();
+            if (currentEnemy != null && !currentEnemy.IsDead)
+            {
+                bool isDead = currentEnemy.TakeDamage(player.Damage, out BigNumber reward);
+                player.AddGold(reward);
+                if (isDead)
+                {
+                    AnimateJump();
+                    SpawnNewEnemy();
+                }
             }
         }
 
@@ -186,7 +233,6 @@ namespace laba_2
             var bounceY = new DoubleAnimation(0, -50, TimeSpan.FromMilliseconds(100));
             var fallY = new DoubleAnimation(-50, 0, TimeSpan.FromMilliseconds(100));
 
-            // Применяем к RenderTransform у Image
             var transformGroup = new TransformGroup();
             var translateTransform = new TranslateTransform();
             transformGroup.Children.Add(translateTransform);
@@ -194,7 +240,6 @@ namespace laba_2
             EnemyImage.RenderTransformOrigin = new Point(0.5, 0.5);
             EnemyImage.RenderTransform = transformGroup;
 
-            // Сначала подпрыгивает, потом возвращается
             bounceY.Completed += (s, e) =>
             {
                 translateTransform.BeginAnimation(TranslateTransform.YProperty, fallY);

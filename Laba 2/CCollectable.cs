@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows;
 
+// Файл: CCollectable.cs
 namespace laba_2
 {
     public abstract class CCollectable
@@ -33,13 +34,18 @@ namespace laba_2
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top
             };
-
             sprite.Margin = new Thickness(position.X - size / 2, position.Y - size / 2, 0, 0);
         }
 
-        public abstract double GetPointsValue();
-        public abstract bool IsMouseOnObject(Point mousePosition);
-        public abstract bool OnClick(CPlayer player, CController controller, Point mousePosition);
+        public abstract bool onClick(CPlayer player, CController controller, Point mousePosition);
+
+        protected bool isMouseOnObject(Point mousePosition)
+        {
+            double dx = mousePosition.X - position.X;
+            double dy = mousePosition.Y - position.Y;
+            double radius = size.Width / 2;
+            return dx * dx + dy * dy <= radius * radius;
+        }
 
         public bool UpdateLifetime(double delta)
         {
