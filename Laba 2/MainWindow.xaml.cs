@@ -17,6 +17,12 @@ namespace laba_2
 
         private Viewbox splashViewbox;
 
+        private List<CCollectable> bonusObjects = new List<CCollectable>();
+        private DispatcherTimer bonusTimer;
+        private Random rng = new Random();
+        private double bonusSpawnRate = 3.0; // каждые 3 сек
+        private double bonusTimerAccum = 0;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -53,8 +59,39 @@ namespace laba_2
 
             SpawnNewEnemy();
 
+            bonusTimer = new DispatcherTimer();
+            bonusTimer.Interval = TimeSpan.FromMilliseconds(100);
+            bonusTimer.Tick += BonusTimer_Tick;
+            bonusTimer.Start();
 
             PlayerGrid.DataContext = player; //
+        }
+
+        private void BonusTimer_Tick(object sender, EventArgs e)
+        {
+            const double delta = 0.1;
+            player.UpdateClickCooldown(delta);
+
+            bonusTimerAccum -= delta;
+            if (bonusTimerAccum <= 0)
+            {
+                SpawnBonusObject();
+                bonusTimerAccum = bonusSpawnRate;
+            }
+
+            for (int i = bonusObjects.Count - 1; i >= 0; i--)
+            {
+                if (bonusObjects[i].UpdateLifetime(delta))
+                {
+                    var sprite = bonusObjects[i].Sprite;
+                    if (BonusCanvas.Children.Contains(sprite))
+                        BonusCanvas.Children.Remove(sprite);
+                    bonusObjects.RemoveAt(i);
+                }
+            }
+
+            if (CooldownBlock != null)
+                CooldownBlock.Text = player.GetRemainingCooldown().ToString("F2");
         }
 
         private void SpawnNewEnemy()

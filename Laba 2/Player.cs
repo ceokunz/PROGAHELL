@@ -15,6 +15,7 @@ namespace laba_2
         long damageModifier;
         BigNumber upgradeCost;
         double upgradeModifier;
+        private CPlayer clickHandler;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -90,6 +91,8 @@ namespace laba_2
             damageModifier = DamageModifier;
             upgradeCost = UpgradeCost;
             upgradeModifier = UpgradeModifier;
+
+            clickHandler = new CPlayer(baseCooldown: 1.0); //опаааа
         }
 
         public bool AddGold(BigNumber amount)
@@ -117,32 +120,6 @@ namespace laba_2
             return true;
         }
 
-        public BigNumber DealDamage(Enemy enemy)
-        {
-            return null;
-        }
-
-        private void RecalculateStats()
-        {
-
-        }
-
-        private BigNumber CalculateNextUpgradeCost()
-        {
-            return null;
-
-        }
-
-        private BigNumber CalculateTotalDamage()
-        {
-            throw new NotImplementedException();
-        }
-
-        private bool TrySpendGold(BigNumber amount)
-        {
-            throw new NotImplementedException();
-
-        }
         public void ResetToDefault()
         {
             Lvl = 1;
@@ -150,6 +127,23 @@ namespace laba_2
             Damage = new BigNumber("1");
 
             UpgradeCost = new BigNumber("10");
+        }
+
+        public void UpdateClickCooldown(double delta)
+        {
+            clickHandler.Update(delta);
+        }
+
+        public bool CanClick() => clickHandler.CanClick();
+
+        public void PerformClick()
+        {
+            clickHandler.PerformClick();
+        }
+
+        public void IncreaseClickSpeed(double reduction)
+        {
+            clickHandler.IncreaseClickSpeed(reduction);
         }
     }
 }
