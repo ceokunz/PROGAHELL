@@ -11,7 +11,8 @@ namespace laba_2
 {
     public partial class MainWindow : Window
     {
-        private Player player;
+        private Player new_player;
+        private CPlayer player;
         private Enemy currentEnemy;
         private EnemyTemplateManager enemyManager;
         private CController controller;
@@ -33,7 +34,7 @@ namespace laba_2
             splashViewbox = (Viewbox)SplashGrid.Children[0];
             StartSplashScreen();
 
-            player = new Player(
+            new_player = new Player(
                 Lvl: 1,
                 Gold: new BigNumber("0"),
                 Damage: new BigNumber("1"),
@@ -42,18 +43,20 @@ namespace laba_2
                 UpgradeModifier: 1.2
             );
 
+            player = new CPlayer(1);
+
             var templates = new List<CEnemyTemplate>
             {
-                new CEnemyTemplate("Valera", "20", "3", 80, "C:\\Users\\SAPR\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\val.png"),
-                new CEnemyTemplate("Zlata", "60", "3", 60, "C:\\Users\\SAPR\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\zlata.png"),
-                new CEnemyTemplate("Sergey Alexeevich", "666", "10000000", 20, "C:\\Users\\SAPR\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\alex.png"),
-                new CEnemyTemplate("Maxim Urich", "999", "10000000", 10, "C:\\Users\\SAPR\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\max.png")
+                //new CEnemyTemplate("Valera", "20", "3", 80, "C:\\Users\\SAPR\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\val.png"),
+                //new CEnemyTemplate("Zlata", "60", "3", 60, "C:\\Users\\SAPR\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\zlata.png"),
+                //new CEnemyTemplate("Sergey Alexeevich", "666", "10000000", 20, "C:\\Users\\SAPR\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\alex.png"),
+                //new CEnemyTemplate("Maxim Urich", "999", "10000000", 10, "C:\\Users\\SAPR\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\max.png")
 
 
-                //new CEnemyTemplate("Valera", "20", "3", 80, "C:\\Users\\izzzz\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\кунзик.png"),
-                //new CEnemyTemplate("Zlata", "20", "3", 80, "C:\\Users\\izzzz\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\zlata.png"),
-                //new CEnemyTemplate("Sergey Alexeevich", "666", "10000000", 20, "C:\Users\user\Source\Repos\ceokunz\PROGAHELL\laba 2\monsters\alex.png"),
-                //new CEnemyTemplate("Maxim Urich", "999", "10000000", 10, "C:\\Users\\izzzz\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\max.png")
+                new CEnemyTemplate("Valera", "20", "3", 80, "C:\\Users\\izzzz\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\кунзик.png"),
+                new CEnemyTemplate("Zlata", "20", "3", 80, "C:\\Users\\izzzz\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\zlata.png"),
+                new CEnemyTemplate("Sergey Alexeevich", "666", "10000000", 20, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\alex.png"),
+                new CEnemyTemplate("Maxim Urich", "999", "10000000", 10, "C:\\Users\\izzzz\\source\\repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\max.png")
             };
 
             enemyManager = new EnemyTemplateManager();
@@ -76,7 +79,7 @@ namespace laba_2
         private void BonusTimer_Tick(object sender, EventArgs e)
         {
             const double delta = 0.1;
-            player.UpdateClickCooldown(delta);
+            new_player.UpdateClickCooldown(delta);
 
             bonusSpawnAccum -= delta;
             if (bonusSpawnAccum <= 0)
@@ -97,7 +100,7 @@ namespace laba_2
             }
 
             if (CooldownBlock != null)
-                CooldownBlock.Text = player.GetRemainingCooldown().ToString("F2");
+                CooldownBlock.Text = new_player.GetRemainingCooldown().ToString("F2");
         }
 
         private void SpawnBonusObject()
@@ -149,7 +152,7 @@ namespace laba_2
 
         private void UpgradeButton(object sender, RoutedEventArgs e)
         {
-            if (player.TryUpgrade())
+            if (new_player.TryUpgrade())
             {
 
             }
@@ -161,7 +164,7 @@ namespace laba_2
 
         private void Repeat_Click(object sender, RoutedEventArgs e)
         {
-            player.ResetToDefault();
+            new_player.ResetToDefault();
             SpawnNewEnemy();
         }
 
@@ -175,12 +178,10 @@ namespace laba_2
         {
             if (!player.CanClick()) return;
 
-            Point mousePos = Mouse.GetPosition(BonusCanvas); // ✅ Правильно!
+            Point mousePos = Mouse.GetPosition(BonusCanvas);
 
-            // Сначала проверяем бонусы через controller
             if (controller.MouseClick(mousePos, player))
             {
-                // Клик попал по бонусу — ничего не делаем с врагом
                 return;
             }
 
@@ -188,8 +189,8 @@ namespace laba_2
             player.PerformClick();
             if (currentEnemy != null && !currentEnemy.IsDead)
             {
-                bool isDead = currentEnemy.TakeDamage(player.Damage, out BigNumber reward);
-                player.AddGold(reward);
+                bool isDead = currentEnemy.TakeDamage(new_player.Damage, out BigNumber reward);
+                new_player.AddGold(reward);
                 if (isDead)
                 {
                     AnimateJump();
