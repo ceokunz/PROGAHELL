@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
@@ -18,7 +19,7 @@ namespace laba_2
         private double minSpriteSize = 10.0;
         private double maxSpriteSize = 30.0;
         private Size sceneSize;
-        public CPlayer Player { get; private set; }
+        public Player Player { get; private set; }
 
         public double Time { get => gameTime; private set { gameTime = value; OnPropertyChanged(); } }
         public double SpawnRate { get => spawnRate; private set { spawnRate = value; } }
@@ -32,15 +33,15 @@ namespace laba_2
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public CController(double spawnRate, double startTime, Size sceneSize)
+        public CController(Player player, double spawnRate, double startTime, Size sceneSize)
         {
+            this.Player = player;
             this.spawnRate = spawnRate;
             this.gameTime = startTime;
             this.spawnTimer = spawnRate;
             this.sceneSize = sceneSize;
             this.objects = new List<CCollectable>();
             this.rng = new Random();
-            this.Player = new CPlayer(baseCooldown: 0.5);
         }
 
         public void IncreaseLifetimeRange(double bonus)
@@ -65,7 +66,7 @@ namespace laba_2
             double r = rng.NextDouble();
             CCollectable obj = null;
 
-            if (r < 0.6) obj = new CPointGiver(pos, size, lifetime);
+            if (r < 0.6) obj = new CGoldGiver(pos, size, lifetime);
             else if (r < 0.75) obj = new CClickSpeedUp(pos, size, lifetime);
             else if (r < 0.9) obj = new CSpawnRateChanger(pos, size, lifetime);
             else obj = new CLifetimeChanger(pos, size, lifetime);

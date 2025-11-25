@@ -69,9 +69,11 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="CLICK to deal DAMAGE!" HorizontalAlignment="Center" Style="{StaticResource PropertyBlocks}"></TextBlock>
+                    
                     <!--нажмите чтобы ударить злату и валеру-->
-                    <Canvas Grid.Row="1" x:Name="scene" Margin="10" Height="300" Width="300" MouseDown="GameCanvas_MouseDown" Background="Transparent"/>
-                    <Button Name="image" Height="200" Width="200" Grid.Row="1" Background="Transparent" 
+
+                    <Canvas Grid.Row="1" x:Name="scene" Height="250" Width="250" MouseDown="GameCanvas_MouseDown" Background="Transparent" VerticalAlignment="Center" Panel.ZIndex="1" IsHitTestVisible="False"/>
+                    <Button Name="image" Height="250" Width="250" Grid.Row="1" Background="Transparent" 
                         Click="Button_Click" Grid.RowSpan="2" VerticalAlignment="Top" 
                         Style="{StaticResource ImageButtonStyle}" BorderBrush="{x:Null}">
                         <Image x:Name="EnemyImage" Source="{Binding Path=IconPath}" Stretch="Uniform"/>
@@ -134,7 +136,7 @@
                 </Grid>
             </StackPanel>
         </Grid>
-
+        
         <Grid x:Name="SplashGrid" Background="Transparent" Visibility="Visible" Opacity="0" Grid.ColumnSpan="2">
             <Viewbox Stretch="Uniform" MaxWidth="500" MaxHeight="400" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Image Source="/Resources/splash.png" Stretch="Uniform"/>

@@ -19,7 +19,7 @@ namespace laba_2
             sprite.Fill = Brushes.Yellow;
         }
 
-        public override double GetPointsValue() => 0;
+        //public override double GetPointsValue() => 0;
         public override bool IsMouseOnObject(Point mousePosition)
         {
             double dx = mousePosition.X - position.X;
@@ -28,9 +28,12 @@ namespace laba_2
             return dx * dx + dy * dy <= radius * radius;
         }
 
-        public override bool OnClick(Player player, Point mousePosition)
+        public override bool OnClick(Player player, CController controller, Point mousePosition)
         {
-            if (!IsMouseOnObject(mousePosition)) return false;
+            if (!IsMouseOnObject(mousePosition))
+                return false;
+
+            player.IncreaseClickSpeed(bonus);
             return true;
         }
     }

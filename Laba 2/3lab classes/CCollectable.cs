@@ -37,9 +37,9 @@ namespace laba_2
             sprite.Margin = new Thickness(position.X - size / 2, position.Y - size / 2, 0, 0);
         }
 
-        public abstract double GetPointsValue();
+        //public abstract double GetPointsValue();
         public abstract bool IsMouseOnObject(Point mousePosition);
-        public abstract bool OnClick(Player player, Point mousePosition);
+        public abstract bool OnClick(Player player, CController controller, Point mousePosition);
 
         public bool UpdateLifetime(double delta)
         {

@@ -67,7 +67,7 @@ namespace laba_2
 
             gameRunning = true;
             gameTimer.Start();
-            controller = new CController(spawnRate: 2.0, startTime: 0.0, sceneSize: new Size(scene.Width, scene.Height));
+            controller = new CController(player: player, spawnRate: 2.0, startTime: 0.0, sceneSize: new Size(scene.Width, scene.Height));
 
             this.DataContext = controller;
 
