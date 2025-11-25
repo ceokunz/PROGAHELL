@@ -50,7 +50,6 @@ namespace laba_2
                 }
             }
         }
-
         public BigNumber Damage
         {
             get { return damage; }

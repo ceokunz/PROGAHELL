@@ -31,10 +31,9 @@ namespace laba_2
             return dx * dx + dy * dy <= radius * radius;
         }
 
-        public override bool OnClick(CPlayer player, CController controller, Point mousePosition)
+        public override bool OnClick(Player player, Point mousePosition)
         {
             if (!IsMouseOnObject(mousePosition)) return false;
-            controller.AddPoints(goldValue);
             return true;
         }
     }

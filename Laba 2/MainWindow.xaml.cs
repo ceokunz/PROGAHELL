@@ -35,7 +35,8 @@ namespace laba_2
                 Damage: new BigNumber("1"),
                 DamageModifier: 2,
                 UpgradeCost: new BigNumber("10"),
-                UpgradeModifier: 1.2
+                UpgradeModifier: 1.2,
+                BaseClickCooldown: 1
             );
 
             var templates = new List<CEnemyTemplate>
@@ -95,7 +96,7 @@ namespace laba_2
             gameRunning = false;
             gameTimer.Stop();
 
-            MessageBox.Show($"Игра окончена.\nВаш счёт: {controller.Points:F0}", "Конец игры",
+            MessageBox.Show($"Игра окончена.\nВаш счёт: {player.Gold}", "Конец игры",
                             MessageBoxButton.OK, MessageBoxImage.Information);
 
             scene.Children.Clear();
