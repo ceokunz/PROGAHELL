@@ -10,18 +10,18 @@ using System.Windows.Media;
 
 namespace laba_2
 {
-    public class CPointGiver : CCollectable
+    public class CGoldGiver : CCollectable
     {
-        private double pointsValue;
+        private double goldValue;
 
-        public CPointGiver(Point position, double size, double lifetime)
+        public CGoldGiver(Point position, double size, double lifetime)
             : base(position, size, lifetime)
         {
             sprite.Fill = Brushes.BlueViolet;
-            pointsValue = (1.0 / size) / lifetime * 1000.0;
+            goldValue = (1.0 / size) / lifetime * 1000.0;
         }
 
-        public override double GetPointsValue() => pointsValue;
+        public override double GetPointsValue() => goldValue;
 
         public override bool IsMouseOnObject(Point mousePosition)
         {
@@ -34,7 +34,7 @@ namespace laba_2
         public override bool OnClick(CPlayer player, CController controller, Point mousePosition)
         {
             if (!IsMouseOnObject(mousePosition)) return false;
-            controller.AddPoints(pointsValue);
+            controller.AddPoints(goldValue);
             return true;
         }
     }

@@ -39,7 +39,7 @@ namespace laba_2
 
         public abstract double GetPointsValue();
         public abstract bool IsMouseOnObject(Point mousePosition);
-        public abstract bool OnClick(CPlayer player, CController controller, Point mousePosition);
+        public abstract bool OnClick(Player player, Point mousePosition);
 
         public bool UpdateLifetime(double delta)
         {

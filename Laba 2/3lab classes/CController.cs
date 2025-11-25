@@ -18,11 +18,9 @@ namespace laba_2
         private double minSpriteSize = 10.0;
         private double maxSpriteSize = 30.0;
         private Size sceneSize;
-        private double points;
         public CPlayer Player { get; private set; }
 
         public double Time { get => gameTime; private set { gameTime = value; OnPropertyChanged(); } }
-        public double Points { get => points; private set { points = value; } }
         public double SpawnRate { get => spawnRate; private set { spawnRate = value; } }
         public Size SceneSize { get => sceneSize; }
         public double ClickCooldown => Player.RemainingCooldown;
@@ -44,8 +42,6 @@ namespace laba_2
             this.rng = new Random();
             this.Player = new CPlayer(baseCooldown: 0.5);
         }
-
-        public void AddPoints(double value) => Points += value;
 
         public void IncreaseLifetimeRange(double bonus)
         {
