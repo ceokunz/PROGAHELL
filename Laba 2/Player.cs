@@ -16,6 +16,10 @@ namespace laba_2
         BigNumber upgradeCost;
         double upgradeModifier;
 
+        private double baseClickCooldown = 0.5;
+        private double currentCooldown;
+        private double cooldownTimer;
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -82,7 +86,10 @@ namespace laba_2
             private set { upgradeModifier = value; }    
         }
 
-        public Player(int Lvl, BigNumber Gold, BigNumber Damage, long DamageModifier, BigNumber UpgradeCost, double UpgradeModifier)
+        public double RemainingCooldown => Math.Max(0, cooldownTimer);
+
+
+        public Player(int Lvl, BigNumber Gold, BigNumber Damage, long DamageModifier, BigNumber UpgradeCost, double UpgradeModifier, double BaseClickCooldown)
         {
             lvl = 1;
             gold = Gold;
@@ -90,6 +97,7 @@ namespace laba_2
             damageModifier = DamageModifier;
             upgradeCost = UpgradeCost;
             upgradeModifier = UpgradeModifier;
+            baseClickCooldown = BaseClickCooldown;
         }
 
         public bool AddGold(BigNumber amount)
@@ -109,7 +117,6 @@ namespace laba_2
 
             Lvl++;
 
-            BigNumber multiplier = new BigNumber(UpgradeModifier.ToString("F0"));
 
             long nextMult = (long)Math.Round(UpgradeModifier * Lvl);
             UpgradeCost = UpgradeCost.Multiply(nextMult);
@@ -119,37 +126,40 @@ namespace laba_2
 
         public BigNumber DealDamage(Enemy enemy)
         {
-            return null;
+            return Damage;
         }
 
-        private void RecalculateStats()
-        {
-
-        }
-
-        private BigNumber CalculateNextUpgradeCost()
-        {
-            return null;
-
-        }
-
-        private BigNumber CalculateTotalDamage()
-        {
-            throw new NotImplementedException();
-        }
-
-        private bool TrySpendGold(BigNumber amount)
-        {
-            throw new NotImplementedException();
-
-        }
         public void ResetToDefault()
         {
             Lvl = 1;
             Gold = new BigNumber("0");
             Damage = new BigNumber("1");
-
             UpgradeCost = new BigNumber("10");
+
+            // Сброс кулдауна
+            currentCooldown = baseClickCooldown;
+            cooldownTimer = 0;
         }
+        public void Update(double delta)
+        {
+            if (cooldownTimer > 0)
+                cooldownTimer -= delta;
+        }
+
+        public bool CanClick() => cooldownTimer <= 0;
+
+        public void PerformClick()
+        {
+            if (CanClick())
+            {
+                cooldownTimer = currentCooldown;
+            }
+        }
+
+        public void IncreaseClickSpeed(double reduction)
+        {
+            currentCooldown = Math.Max(0.1, currentCooldown - reduction);
+        }
+        
     }
 }
