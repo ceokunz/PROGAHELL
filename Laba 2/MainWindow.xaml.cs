@@ -86,7 +86,7 @@ namespace laba_2
             //    return;
             //}
 
-            //CooldownBlock.Text = controller.ClickCooldown.ToString("F2"); // ← вот это!
+            //CooldownBlock.Text = controller.ClickCooldown.ToString("F2");
 
             UpdateUI();
         }
@@ -96,8 +96,7 @@ namespace laba_2
             gameRunning = false;
             gameTimer.Stop();
 
-            MessageBox.Show($"Игра окончена.\nВаш счёт: {player.Gold}", "Конец игры",
-                            MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show($"Игра окончена.\nВаш счёт: {player.Gold}", "Конец игры");
 
             scene.Children.Clear();
         }
@@ -106,18 +105,43 @@ namespace laba_2
         {
             var currentObjects = controller.GetObjects();
 
-            var toRemove = scene.Children.OfType<Ellipse>()
-                .Where(el => !currentObjects.Any(obj => obj.Sprite == el))
-                .ToList();
+            var toRemove = scene.Children.OfType<Ellipse>().Where(el => !currentObjects.Any(obj => obj.Sprite == el)).ToList();
 
             foreach (var el in toRemove)
+            {
                 scene.Children.Remove(el);
+                el.MouseDown -= OnCollectableMouseDown;
+            }    
+
+                
 
             foreach (var obj in currentObjects)
             {
-                if (!scene.Children.Contains(obj.Sprite))
-                    scene.Children.Add(obj.Sprite);
+                var sprite = obj.Sprite;
+                if (!scene.Children.Contains(sprite))
+                {
+                    sprite.IsHitTestVisible = true;
+                    sprite.MouseDown += OnCollectableMouseDown;
+                    scene.Children.Add(sprite);
+                }
             }
+        }
+
+        private void OnCollectableMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!gameRunning || controller == null) return;
+
+            var ellipse = (Ellipse)sender;
+            var obj = controller.GetObjects().FirstOrDefault(o => o.Sprite == ellipse);
+            if (obj == null) return;
+
+            Point mousePos = e.GetPosition(scene);
+            if (obj.OnClick(player, controller, mousePos))
+            {
+                controller.RemoveObject(obj);
+            }
+
+            e.Handled = true;
         }
 
         private void SpawnNewEnemy()

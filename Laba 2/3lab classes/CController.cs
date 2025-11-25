@@ -111,6 +111,11 @@ namespace laba_2
             }
         }
 
+        public void RemoveObject(CCollectable obj)
+        {
+            objects.Remove(obj);
+        }
+
         public List<CCollectable> GetObjects() => new List<CCollectable>(objects);
     }
 }
