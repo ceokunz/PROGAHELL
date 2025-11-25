@@ -70,12 +70,13 @@
                     </Grid.RowDefinitions>
                     <TextBlock Text="CLICK to deal DAMAGE!" HorizontalAlignment="Center" Style="{StaticResource PropertyBlocks}"></TextBlock>
                     <!--нажмите чтобы ударить злату и валеру-->
-                    <Button Name="scene" Height="200" Width="200" Grid.Row="1" Background="Transparent" 
+                    <Canvas Grid.Row="1" x:Name="scene" Margin="10" Height="300" Width="300" MouseDown="GameCanvas_MouseDown" Background="Transparent"/>
+                    <Button Name="image" Height="200" Width="200" Grid.Row="1" Background="Transparent" 
                         Click="Button_Click" Grid.RowSpan="2" VerticalAlignment="Top" 
                         Style="{StaticResource ImageButtonStyle}" BorderBrush="{x:Null}">
                         <Image x:Name="EnemyImage" Source="{Binding Path=IconPath}" Stretch="Uniform"/>
                     </Button>
-                    <UniformGrid Grid.Row="2" Columns="2" Height="50" Margin="10,75,10,-55">
+                    <UniformGrid Grid.Row="2" Columns="2" Height="50">
                         <Button x:Name="ButtonRepeat" Content="REPEAT" Click="Repeat_Click" Style="{StaticResource ButtonStyle}"/>
                         <Button x:Name="ButtonNext" Content="NEXT" Click="Next_Click" Style="{StaticResource ButtonStyle}"/>
                     </UniformGrid>

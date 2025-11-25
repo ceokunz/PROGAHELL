@@ -66,7 +66,6 @@ namespace laba_2
             double size = rng.NextDouble() * (maxSpriteSize - minSpriteSize) + minSpriteSize;
             double lifetime = rng.NextDouble() * (maxLifetime - minLifetime) + minLifetime;
 
-            // Спавним разные типы с вероятностями
             double r = rng.NextDouble();
             CCollectable obj = null;
 

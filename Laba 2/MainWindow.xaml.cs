@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace laba_2
@@ -14,6 +15,10 @@ namespace laba_2
         private Player player;
         private Enemy currentEnemy;
         private EnemyTemplateManager enemyManager;
+
+        private CController controller;
+        private DispatcherTimer gameTimer;
+        private bool gameRunning = false;
 
         private Viewbox splashViewbox;
 
@@ -63,6 +68,66 @@ namespace laba_2
 
 
             PlayerGrid.DataContext = player; //
+
+            //шиза из 3ей лабы
+
+            gameTimer = new DispatcherTimer();
+            gameTimer.Interval = TimeSpan.FromMilliseconds(100);
+            gameTimer.Tick += GameTimer_Tick;
+
+            gameRunning = true;
+            gameTimer.Start();
+            controller = new CController(spawnRate: 2.0, startTime: 0.0, sceneSize: new Size(scene.Width, scene.Height));
+
+            this.DataContext = controller;
+
+
+        }
+
+        private void GameTimer_Tick(object sender, EventArgs e)
+        {
+            if (!gameRunning) return;
+
+            controller.Update(0.1);
+
+            //if (controller.Time >= 20)
+            //{
+            //    EndGame();
+            //    return;
+            //}
+
+            //CooldownBlock.Text = controller.ClickCooldown.ToString("F2"); // ← вот это!
+
+            UpdateUI();
+        }
+
+        private void EndGame()
+        {
+            gameRunning = false;
+            gameTimer.Stop();
+
+            MessageBox.Show($"Игра окончена.\nВаш счёт: {controller.Points:F0}", "Конец игры",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+
+            scene.Children.Clear();
+        }
+
+        private void UpdateUI()
+        {
+            var currentObjects = controller.GetObjects();
+
+            var toRemove = scene.Children.OfType<Ellipse>()
+                .Where(el => !currentObjects.Any(obj => obj.Sprite == el))
+                .ToList();
+
+            foreach (var el in toRemove)
+                scene.Children.Remove(el);
+
+            foreach (var obj in currentObjects)
+            {
+                if (!scene.Children.Contains(obj.Sprite))
+                    scene.Children.Add(obj.Sprite);
+            }
         }
 
         private void SpawnNewEnemy()
@@ -120,6 +185,13 @@ namespace laba_2
                 AnimateJump();
                 SpawnNewEnemy();
             }
+        }
+
+        private void GameCanvas_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!gameRunning) return;
+            Point mousePos = e.GetPosition(scene);
+            controller.MouseClick(mousePos);
         }
 
         //анимации! ---------------------------------------------------
