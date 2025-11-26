@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace laba_2
 {
-    public class Enemy : INotifyPropertyChanged
+    public abstract class Enemy : INotifyPropertyChanged
     {
         private string name;
         private BigNumber maxHitpoints;
@@ -27,13 +27,13 @@ namespace laba_2
         public string Name
         {
             get { return name; }
-            private set { name = value; }
+            protected set { name = value; }
         }
 
         public BigNumber MaxHitpoints
         {
             get { return maxHitpoints;}
-            private set
+            protected set
             {
                  if (maxHitpoints != value)
                  {
@@ -46,13 +46,13 @@ namespace laba_2
         public BigNumber GoldReward
         {
             get { return goldReward;}
-            private set { goldReward = value; }
+            protected set { goldReward = value; }
         }
 
         public BigNumber CurrentHitpoints
         {
             get { return currentHitpoints;}
-            private set 
+            protected set 
             {
                 if (currentHitpoints != value)
                 {
@@ -65,13 +65,13 @@ namespace laba_2
         public bool IsDead
         {
             get { return isDead;}
-            private set { isDead = value;}
+            protected set { isDead = value;}
         }
 
         public IconItem Icon
         {
             get{ return icon;}
-            private set { icon = value;}
+            protected set { icon = value;}
         }
 
 
@@ -86,31 +86,8 @@ namespace laba_2
             icon = Icon;
         }
 
-        public bool TakeDamage(BigNumber dmg, out BigNumber goldReward)
-        {
-            goldReward = new BigNumber("0");
-
-            if (IsDead) return false;
-
-            if (dmg.CompareTo(CurrentHitpoints) >= 0)
-            {
-                // УМИРАЕМ =)))
-                CurrentHitpoints = new BigNumber("0");
-                IsDead = true;
-                goldReward = this.GoldReward;
-                return true;
-            }
-            else
-            {
-                CurrentHitpoints = CurrentHitpoints.Subtract(dmg);
-                return false;
-            }
-        }
-
-        private void Die()
-        {
-            //говно
-        }
+        public abstract bool TakeDamage(BigNumber dmg, out BigNumber goldReward);
+        
 
         public override string ToString()
         {
