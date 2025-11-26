@@ -71,13 +71,21 @@
                     <TextBlock Text="CLICK to deal DAMAGE!" HorizontalAlignment="Center" Style="{StaticResource PropertyBlocks}"></TextBlock>
                     
                     <!--нажмите чтобы ударить злату и валеру-->
-
-                    <Canvas Grid.Row="1" x:Name="scene" Height="250" Width="250" MouseDown="GameCanvas_MouseDown" Background="Transparent" VerticalAlignment="Center" Panel.ZIndex="1" IsHitTestVisible="False"/>
-                    <Button Name="image" Height="250" Width="250" Grid.Row="1" Background="Transparent" 
-                        Click="Button_Click" Grid.RowSpan="2" VerticalAlignment="Top" 
-                        Style="{StaticResource ImageButtonStyle}" BorderBrush="{x:Null}">
-                        <Image x:Name="EnemyImage" Source="{Binding Path=IconPath}" Stretch="Uniform"/>
-                    </Button>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions  >
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Canvas Grid.Column="0" x:Name="scene" Height="250" Width="125" MouseDown="GameCanvas_MouseDown" Background="Transparent" VerticalAlignment="Center"/>
+                        <Button Name="image" Height="250" Width="125" Grid.Column="1" Background="Transparent" 
+                            Click="Button_Click" Grid.RowSpan="2" VerticalAlignment="Top" 
+                            Style="{StaticResource ImageButtonStyle}" BorderBrush="{x:Null}">
+                            <Image x:Name="EnemyImage" Source="{Binding Path=IconPath}" Stretch="Uniform"/>
+                        </Button>
+                        
+                    </Grid>
+    
                     <UniformGrid Grid.Row="2" Columns="2" Height="50">
                         <Button x:Name="ButtonRepeat" Content="REPEAT" Click="Repeat_Click" Style="{StaticResource ButtonStyle}"/>
                         <Button x:Name="ButtonNext" Content="NEXT" Click="Next_Click" Style="{StaticResource ButtonStyle}"/>
