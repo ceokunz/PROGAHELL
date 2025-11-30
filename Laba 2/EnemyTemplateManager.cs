@@ -85,7 +85,7 @@ namespace laba_2
             if (template == null)
                 return null;
 
-            return new Ykorachenemy(template.Name,template.MaxHitpoints,template.GoldReward,template.MaxHitpoints.Clone(),false,template.Icon, 342347238);
+            return new YkorachEnemy(template.Name,template.MaxHitpoints,template.GoldReward,template.MaxHitpoints.Clone(),false,template.Icon, 3423472);
         }
         //создает случайного противника 
         public Enemy CreateRandomEnemy()

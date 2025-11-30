@@ -6,16 +6,23 @@ using System.Threading.Tasks;
 
 namespace laba_2
 {
-    internal class Ykorachenemy : Enemy
+    public class YkorachEnemy : Enemy
     {
         private int ykorachSize;
-        public int YkorachSize 
-        { 
-            get { return ykorachSize; } 
-            set { ykorachSize = value; } 
+        public int YkorachSize
+        {
+            get => ykorachSize;
+            set
+            {
+                if (ykorachSize != value)
+                {
+                    ykorachSize = value;
+                    OnPropertyChanged(nameof(YkorachSize));
+                }
+            }
         }
 
-        public Ykorachenemy(string Name, BigNumber MaxHitpoints, BigNumber GoldReward, BigNumber CurrentHitpoints, bool IsDead, IconItem Icon, int YkorachSize) : base(Name, MaxHitpoints, GoldReward, CurrentHitpoints, IsDead, Icon)
+        public YkorachEnemy(string Name, BigNumber MaxHitpoints, BigNumber GoldReward, BigNumber CurrentHitpoints, bool IsDead, IconItem Icon, int YkorachSize) : base(Name, MaxHitpoints, GoldReward, CurrentHitpoints, IsDead, Icon)
         {
              ykorachSize = YkorachSize;
         }
@@ -37,6 +44,7 @@ namespace laba_2
             else
             {
                 CurrentHitpoints = CurrentHitpoints.Subtract(dmg);
+                YkorachSize = Math.Max(0, YkorachSize - 1);
                 return false;
             }
         }
