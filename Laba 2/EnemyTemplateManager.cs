@@ -13,15 +13,15 @@ namespace laba_2
         private Random random = new Random();
 
        
-        public IReadOnlyList<CEnemyTemplate> Enemies => enemies.AsReadOnly(); //свойство для доступа к списку шаблонов (только для чтения)
-        public void AddEnemyTemplate(CEnemyTemplate enemyTemplate) //добавляет шаблон противника 
+        public IReadOnlyList<CEnemyTemplate> Enemies => enemies.AsReadOnly();
+        public void AddEnemyTemplate(CEnemyTemplate enemyTemplate) 
         {
             if (enemyTemplate == null)
                 throw new ArgumentNullException(nameof(enemyTemplate));
 
             enemies.Add(enemyTemplate);
         }
-        public void LoadTemplates(IEnumerable<CEnemyTemplate> templates) //загружает коллекцию шаблонов противников
+        public void LoadTemplates(IEnumerable<CEnemyTemplate> templates) 
         {
             if (templates == null)
                 throw new ArgumentNullException(nameof(templates));
@@ -29,17 +29,17 @@ namespace laba_2
             enemies.Clear();
             enemies.AddRange(templates);
         }
-        public void NormalizeChances() //нормализация шансов появления противников (сумма шансов = 1)
+        public void NormalizeChances() 
         {
             if (enemies.Count == 0)
                 return;
 
             double sum = 0;
 
-            for (int i = 0; i < enemies.Count; i++) //сумму всех шансов
+            for (int i = 0; i < enemies.Count; i++) 
                 sum += enemies[i].SpawnChance;
             
-            if (sum == 0) //если сумма равна 0, шансы распределяются равномерно
+            if (sum == 0) 
             {
                 double equalChance = 1.0 / enemies.Count;
                 for (int i = 0; i < enemies.Count; i++)
@@ -47,11 +47,11 @@ namespace laba_2
                 return;
             }
 
-            //нормализуем шансы
+            
             for (int i = 0; i < enemies.Count; i++)
                 enemies[i].SpawnChance /= sum;
         }
-        //поиск шаблона противника 
+        
         public CEnemyTemplate FindByChance(double chance)
         {
             if (enemies.Count == 0)
@@ -69,7 +69,7 @@ namespace laba_2
                     return enemies[i];
             }
 
-            //если не найден, возвращаем последнего
+            
             return enemies[enemies.Count - 1];
         }
         public CEnemyTemplate GetRandomEnemy()
@@ -82,12 +82,9 @@ namespace laba_2
         }
         public Enemy CreateEnemyFromTemplate(CEnemyTemplate template)
         {
-            if (template == null)
-                return null;
-
-            return new YkorachEnemy(template.Name,template.MaxHitpoints,template.GoldReward,template.MaxHitpoints.Clone(),false,template.Icon, 3423472);
+            return (Enemy)EnemyFactory.CreateEnemy(template);
         }
-        //создает случайного противника 
+
         public Enemy CreateRandomEnemy()
         {
             var template = GetRandomEnemy();
@@ -103,42 +100,35 @@ namespace laba_2
                 return true;
 
             double sum = enemies.Sum(e => e.SpawnChance);
-            return Math.Abs(sum - 1.0) < 0.0001; // Учитываем погрешность вычислений
+            return Math.Abs(sum - 1.0) < 0.0001;
         }
-        //получает общую сумму шансов всех противников
         public double GetTotalChance()
         {
             return enemies.Sum(e => e.SpawnChance);
         }
     }
-    public class CEnemyTemplate
+
+    public abstract class CEnemyTemplate
     {
-        public string Name { get; set; }
-        public BigNumber MaxHitpoints { get; set; }
-        public BigNumber GoldReward { get; set; }
-        public double SpawnChance { get; set; }
-        public IconItem Icon { get; set; }
+        public string Name { get; set; } = "Name";
+        public BigNumber MaxHitpoints { get; set; } = new BigNumber("1");
+        public BigNumber GoldReward { get; set; } = new BigNumber("0");
+        public double SpawnChance { get; set; } = 1.0;
+        public string IconPath { get; set; } = "";
 
-        //public CEnemyTemplate(string name, BigNumber maxHitpoints, BigNumber goldReward,
-        //                    double spawnChance, IconItem icon)
-        //{
-        //    Name = name;
-        //    MaxHitpoints = maxHitpoints ?? throw new ArgumentNullException(nameof(maxHitpoints));
-        //    GoldReward = goldReward ?? throw new ArgumentNullException(nameof(goldReward));
-        //    SpawnChance = spawnChance;
-        //    Icon = icon;
-        //}
+        protected CEnemyTemplate() 
+        { 
 
-        public CEnemyTemplate(string name, string maxHitpoints, string goldReward,
-                            double spawnChance, string iconPath)
+        }
+
+        protected CEnemyTemplate(string name, string maxHitpoints, string goldReward, double spawnChance, string iconPath)
         {
-            Name = name;
+            Name = name ?? "Unknown";
             MaxHitpoints = new BigNumber(maxHitpoints);
             GoldReward = new BigNumber(goldReward);
             SpawnChance = spawnChance;
-            Icon = new IconItem(iconPath);
+            IconPath = iconPath;
         }
-
         public override string ToString()
         {
             return $"{Name} (HP: {MaxHitpoints}, Gold: {GoldReward}, Chance: {SpawnChance:P2})";

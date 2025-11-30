@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.IO;
 using System.Windows.Threading;
 
 namespace laba_2
@@ -21,6 +22,8 @@ namespace laba_2
         private bool gameRunning = false;
 
         private Viewbox splashViewbox;
+
+        private const string ENEMY_SAVE_PATH = "enemies.json";
 
         public MainWindow()
         {
@@ -39,16 +42,16 @@ namespace laba_2
                 BaseClickCooldown: 1
             );
 
-            var templates = new List<CEnemyTemplate>
+            var saver = new JsonEnemySaver();
+            List<CEnemyTemplate> templates;
+            if (File.Exists(ENEMY_SAVE_PATH))
             {
-
-                
-                new CEnemyTemplate("Valera", "20", "3", 80, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\val.png"),
-                new CEnemyTemplate("Zlata", "20", "3", 60, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\zlata.png"),
-                new CEnemyTemplate("Sergey Alexeevich", "666", "10000000", 20, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\alex.png"),
-                new CEnemyTemplate("Maxim Urich", "999", "10000000", 10, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\max.png")
-
-            };
+                templates = saver.Load(ENEMY_SAVE_PATH);
+            }
+            else
+            {
+                templates = CreateDefaultTemplates();
+            }
 
             enemyManager = new EnemyTemplateManager();
             enemyManager.LoadTemplates(templates);
@@ -72,6 +75,30 @@ namespace laba_2
             this.DataContext = controller;
 
 
+        }
+
+        private List<CEnemyTemplate> CreateDefaultTemplates()
+        {
+            return new List<CEnemyTemplate>
+            {
+            new AverageEnemy("Valera", "20", "3", 80, @"monsters\val.png"),
+            new YkorachEnemy("Zlata", "20", "3", 60, @"monsters\zlata.png", 10),
+            new ArmoredEnemy("Sergey Alexeevich", "666", "10000000", 20, @"monsters\alex.png", armorReduction: 5),
+            new HealingEnemy("Maxim Urich", "999", "10000000", 10, @"monsters\max.png", healChancePercent: 30, healAmount: "50")
+            };
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            gameTimer?.Stop();
+
+
+            var saver = new JsonEnemySaver();
+            saver.Save(enemyManager.Enemies.ToList(), ENEMY_SAVE_PATH);
+
+            var playerSaver = new PlayerSaver();
+            playerSaver.Save(player, "player.json");
         }
 
         private void GameTimer_Tick(object sender, EventArgs e)

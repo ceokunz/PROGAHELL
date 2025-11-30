@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace laba_2
 {
-    public abstract class Enemy : INotifyPropertyChanged
+    public abstract class Enemy : INotifyPropertyChanged, IEnemy
     {
         private string name;
         private BigNumber maxHitpoints;

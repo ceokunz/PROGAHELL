@@ -38,6 +38,20 @@ namespace laba_2
                 }
             }    
         }
+
+        public double BaseClickCooldown
+        {
+            get { return baseClickCooldown; }
+            private set
+            {
+                if (baseClickCooldown != value)
+                {
+                    baseClickCooldown = value;
+                    OnPropertyChanged(nameof(BaseClickCooldown));
+                }
+            }
+        }   
+
         public BigNumber Gold
         {
             get { return gold; }
