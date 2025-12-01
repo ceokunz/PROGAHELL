@@ -20,12 +20,18 @@ namespace laba_2
             get { return maxHitpoints; }
             set { maxHitpoints = value; }
         }
-        public BigNumber GoldReward { get; set; } = new BigNumber("0");
-        public double SpawnChance { get; set; } = 1.0;
-        public string IconPath { get; set; } = "";
-    }
-        public BigNumber GoldReward { get; set; }
-        public double SpawnChance { get; set; }
+        BigNumber goldReward;
+        public BigNumber GoldReward
+        {
+            get { return goldReward;}
+            set{ goldReward = value;} 
+        }
+        double spawnChance;
+        public double SpawnChance 
+        {
+            get { return spawnChance;}
+            set { spawnChance = value;}
+        }
         public IconItem Icon { get; set; }
 
         public CEnemyTemplate(string name, string maxHitpoints, string goldReward,
