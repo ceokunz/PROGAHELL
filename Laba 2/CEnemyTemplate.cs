@@ -20,19 +20,6 @@ namespace laba_2
             get { return maxHitpoints; }
             set { maxHitpoints = value; }
         }
-        BigNumber goldReward;
-        public BigNumber GoldReward
-        {
-            get { return goldReward;}
-            set{ goldReward = value;} 
-        }
-        double spawnChance;
-        public double SpawnChance 
-        {
-            get { return spawnChance;}
-            set { spawnChance = value;}
-        }
-        public IconItem Icon { get; set; }
 
         public CEnemyTemplate(string name, string maxHitpoints, string goldReward,
                             double spawnChance, string iconPath)
