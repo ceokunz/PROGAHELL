@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace laba_2
 {
-    internal class YkorachEnemyTempalate : CEnemyTemplate
+    internal class CYkorachEnemyTemplate : CEnemyTemplate
     {
         private double shrink;
 
@@ -15,7 +15,7 @@ namespace laba_2
             get { return shrink; }
             set { if (value >= 0 && value <= 1.0) shrink = value; else shrink = 0.05; }
         }
-        public YkorachEnemyTempalate(string name, string maxHitpoints, string goldReward, double spawnChance, string iconPath, double shrink) : base(name, maxHitpoints, goldReward, spawnChance, iconPath)
+        public CYkorachEnemyTemplate(string name, string maxHitpoints, string goldReward, double spawnChance, string iconPath, double shrink) : base(name, maxHitpoints, goldReward, spawnChance, iconPath)
         {
             this.Shrink = shrink;
         }
