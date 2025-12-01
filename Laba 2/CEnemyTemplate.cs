@@ -18,19 +18,20 @@ namespace laba_2
         public BigNumber MaxHitpoints 
         { 
             get { return maxHitpoints; }
-            set { maxHitpoints = value; }
+            set { if (maxHitpoints.CompareTo(value) > 0) maxHitpoints = value; else maxHitpoints = new BigNumber("1"); }
+            
         }
         BigNumber goldReward;
         public BigNumber GoldReward
         {
             get { return goldReward; }
-            set { goldReward = value; }
+            set { if (goldReward.CompareTo(value) > 0) goldReward = value; else goldReward = new BigNumber("0"); } 
         }
         double spawnChance;
         public double SpawnChance
         {
             get { return spawnChance; }
-            set { spawnChance = value; }
+            set { if (value > 0) spawnChance = value; else spawnChance = 1; }
         }
         public IconItem Icon { get; set; }
         public CEnemyTemplate(string name, string maxHitpoints, string goldReward,
