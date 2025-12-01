@@ -107,11 +107,6 @@ namespace laba_2
             }
         }
 
-        private void Die()
-        {
-            //говно
-        }
-
         public override string ToString()
         {
             return Name;

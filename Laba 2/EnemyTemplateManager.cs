@@ -111,39 +111,6 @@ namespace laba_2
             return enemies.Sum(e => e.SpawnChance);
         }
     }
-    public class CEnemyTemplate
-    {
-        public string Name { get; set; }
-        public BigNumber MaxHitpoints { get; set; }
-        public BigNumber GoldReward { get; set; }
-        public double SpawnChance { get; set; }
-        public IconItem Icon { get; set; }
-
-        //public CEnemyTemplate(string name, BigNumber maxHitpoints, BigNumber goldReward,
-        //                    double spawnChance, IconItem icon)
-        //{
-        //    Name = name;
-        //    MaxHitpoints = maxHitpoints ?? throw new ArgumentNullException(nameof(maxHitpoints));
-        //    GoldReward = goldReward ?? throw new ArgumentNullException(nameof(goldReward));
-        //    SpawnChance = spawnChance;
-        //    Icon = icon;
-        //}
-
-        public CEnemyTemplate(string name, string maxHitpoints, string goldReward,
-                            double spawnChance, string iconPath)
-        {
-            Name = name;
-            MaxHitpoints = new BigNumber(maxHitpoints);
-            GoldReward = new BigNumber(goldReward);
-            SpawnChance = spawnChance;
-            Icon = new IconItem(iconPath);
-        }
-
-        public override string ToString()
-        {
-            return $"{Name} (HP: {MaxHitpoints}, Gold: {GoldReward}, Chance: {SpawnChance:P2})";
-        }
-    }
 
 }
 
