@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace laba_2
 {
-    public abstract class Enemy : INotifyPropertyChanged
+    public abstract class Enemy : INotifyPropertyChanged, IEnemy
     {
         private string name;
         private BigNumber maxHitpoints;
@@ -86,6 +86,10 @@ namespace laba_2
             icon = Icon;
         }
 
-        public abstract bool TakeDamage(BigNumber dmg, out BigNumber goldReward);
+        public virtual bool TakeDamage(BigNumber dmg, out BigNumber goldReward)
+        {
+            CurrentHitpoints.Subtract(dmg);
+            // что ему не нравится с голден ревардом.........
+        }
     }
 }
