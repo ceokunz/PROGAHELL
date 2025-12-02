@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace laba_2
 {
-    public abstract class CEnemyTemplate
+    public class CEnemyTemplate
     {
         string name;
         public string Name

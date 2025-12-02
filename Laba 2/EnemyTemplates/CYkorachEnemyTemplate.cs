@@ -8,16 +8,16 @@ namespace laba_2
 {
     internal class CYkorachEnemyTemplate : CEnemyTemplate
     {
-        private double shrink;
+        private double ykor;
 
-        public double Shrink
+        public double Ykor
         {
-            get { return shrink; }
-            set { if (value >= 0 && value <= 1.0) shrink = value; else shrink = 0.05; }
+            get { return ykor; }
+            set { if (value >= 0 && value <= 1.0) ykor = value; else ykor = 0.05; }
         }
-        public CYkorachEnemyTemplate(string name, string maxHitpoints, string goldReward, double spawnChance, string iconPath, double shrink) : base(name, maxHitpoints, goldReward, spawnChance, iconPath)
+        public CYkorachEnemyTemplate(string name, string maxHitpoints, string goldReward, double spawnChance, string iconPath, double ykor) : base(name, maxHitpoints, goldReward, spawnChance, iconPath)
         {
-            this.Shrink = shrink;
+            this.Ykor = ykor;
         }
     }
 }
