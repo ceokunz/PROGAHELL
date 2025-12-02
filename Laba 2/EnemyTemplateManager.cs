@@ -85,7 +85,7 @@ namespace laba_2
             if (template == null)
                 return null;
 
-            return new Enemy(template.Name,template.MaxHitpoints,template.GoldReward,template.MaxHitpoints.Clone(),false,template.Icon);
+            return new CEnemyTemplate(template.Name,template.MaxHitpoints,template.GoldReward,template.SpawnChance,template.IconPath);
         }
         //создает случайного противника 
         public Enemy CreateRandomEnemy()
