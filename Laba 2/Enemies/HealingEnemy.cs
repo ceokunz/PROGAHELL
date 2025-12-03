@@ -24,7 +24,7 @@ namespace laba_2
 
             if (IsDead) return false;
 
-            if (dmg.CompareTo(CurrentHitpoints) >= 0)
+            if (dmg >= CurrentHitpoints)
             {
                 // УМИРАЕМ =)))
                 CurrentHitpoints = new BigNumber("0");
@@ -35,8 +35,19 @@ namespace laba_2
             else
             {
                 CurrentHitpoints = CurrentHitpoints.Subtract(dmg);
-                return false;
             }
+            if (rng.NextDouble() < healChance)
+            {
+                long percent = (long)(healPercentage * 1000);
+                BigNumber healAmount = MaxHitpoints.Multiply(percent).Divide(1000);
+
+                CurrentHitpoints = CurrentHitpoints.Add(healAmount);
+
+                if (CurrentHitpoints > MaxHitpoints)
+                    CurrentHitpoints = MaxHitpoints;
+            }
+
+            return false;
         }
     }
 }

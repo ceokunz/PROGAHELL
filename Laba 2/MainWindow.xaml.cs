@@ -47,7 +47,7 @@ namespace laba_2
                 new CEnemyTemplate("Valera", "20", "3", 80, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\val.png"),
                 new CEnemyTemplate("Zlata", "20", "3", 60, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\zlata.png", ETypes.Ykorach),
                 new CEnemyTemplate("Sergey Alexeevich", "666", "100", 20, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\alex.png", ETypes.Armored),
-                new CEnemyTemplate("Maxim Urich", "999", "1000", 10, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\max.png",ETypes.Healing)
+                new CEnemyTemplate("Maxim Urich", "999", "100000", 10, "C:\\Users\\user\\Source\\Repos\\ceokunz\\PROGAHELL\\laba 2\\monsters\\max.png",ETypes.Healing)
 
             };
 

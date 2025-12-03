@@ -8,8 +8,8 @@ namespace laba_2
 {
      class ArmoredEnemy : Enemy
     {
-        private BigNumber armor;
-        public ArmoredEnemy(string Name, BigNumber MaxHitpoints, BigNumber GoldReward, BigNumber CurrentHitpoints, bool IsDead, IconItem Icon, BigNumber armor) : base(Name, MaxHitpoints, GoldReward, CurrentHitpoints, IsDead, Icon)
+        private int armor;
+        public ArmoredEnemy(string Name, BigNumber MaxHitpoints, BigNumber GoldReward, BigNumber CurrentHitpoints, bool IsDead, IconItem Icon, int armor) : base(Name, MaxHitpoints, GoldReward, CurrentHitpoints, IsDead, Icon)
         {
             this.armor = armor;
         }
@@ -18,10 +18,12 @@ namespace laba_2
         {
 
             goldReward = new BigNumber("0");
-
             if (IsDead) return false;
 
-            if (dmg.CompareTo(CurrentHitpoints) >= 0)
+            long effectivePercent = 100 - armor;
+            BigNumber reducedDmg = dmg.Multiply(effectivePercent).Divide(100);
+
+            if (reducedDmg >= CurrentHitpoints)
             {
                 // УМИРАЕМ =)))
                 CurrentHitpoints = new BigNumber("0");
@@ -32,7 +34,7 @@ namespace laba_2
             else
             {
                 
-                CurrentHitpoints = CurrentHitpoints.Subtract(dmg);
+                CurrentHitpoints = CurrentHitpoints.Subtract(reducedDmg);
                 return false;
             }
         }

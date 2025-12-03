@@ -12,7 +12,7 @@ namespace laba_2
         {
             if (template.Type == ETypes.Armored)
             {
-                BigNumber armor = new BigNumber("50");
+                int armor = 50;
                 return new ArmoredEnemy(template.Name, finalLife, finalGold, template.MaxHitpoints, false, template.Icon, armor);
             }
 
@@ -24,8 +24,8 @@ namespace laba_2
 
             if (template.Type == ETypes.Healing)
             {
-                double healChan = 20;
-                double healPerc = 30;
+                double healChan = 0.2;
+                double healPerc = 0.3;
                 
                 return new HealingEnemy(template.Name, finalLife, finalGold, template.MaxHitpoints, false, template.Icon, healChan, healPerc);
             }
