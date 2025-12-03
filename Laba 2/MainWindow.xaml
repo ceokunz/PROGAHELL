@@ -73,7 +73,7 @@
                     <!--нажмите чтобы ударить злату и валеру-->
 
                     <Canvas Grid.Row="1" x:Name="scene" Height="250" Width="250" MouseDown="GameCanvas_MouseDown" Background="Transparent" VerticalAlignment="Center" Panel.ZIndex="1" IsHitTestVisible="False"/>
-                    <Button Name="image" Height="250" Width="250" Grid.Row="1" Background="Transparent" 
+                    <Button Name="image" Grid.Row="1" Background="Transparent" 
                         Click="Button_Click" Grid.RowSpan="2" VerticalAlignment="Top" 
                         Style="{StaticResource ImageButtonStyle}" BorderBrush="{x:Null}">
                         <Image x:Name="EnemyImage" Source="{Binding Path=IconPath}" Stretch="Uniform"/>

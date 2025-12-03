@@ -204,7 +204,21 @@ namespace laba_2
         return new BigNumber(result);
     }
 
-    public static BigNumber operator +(BigNumber a, BigNumber b) => a.Add(b);
+    public double ToDouble()
+    {
+
+        try
+        {
+            return double.Parse(ToString());
+        }
+
+        catch (OverflowException)
+        {
+            return double.PositiveInfinity;
+        }
+    }
+
+        public static BigNumber operator +(BigNumber a, BigNumber b) => a.Add(b);
     public static BigNumber operator -(BigNumber a, BigNumber b) => a.Subtract(b);
     public static BigNumber operator *(BigNumber a, long b) => a.Multiply(b);
     public static BigNumber operator /(BigNumber a, long b) => a.Divide(b);

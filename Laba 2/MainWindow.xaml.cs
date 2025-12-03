@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
@@ -77,6 +78,32 @@ namespace laba_2
 
         }
 
+        private void OnEnemyPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Enemy.CurrentHitpoints))
+            {
+                if (sender is YkorachEnemy)
+                {
+                    UpdateEnemySize();
+                }
+            }
+        }
+        private void UpdateEnemySize()
+        {
+            if (currentEnemy is YkorachEnemy ykorEnemy)
+            {
+                double scale = ykorEnemy.ScaleFactor;
+                const double baseSize = 250.0;
+                image.Height = baseSize * scale;
+                image.Width = baseSize * scale;
+            }
+            else
+            {
+                image.Height = 250;
+                image.Width = 250;
+            }
+        }
+
         private void GameTimer_Tick(object sender, EventArgs e)
         {
             if (!gameRunning) return;
@@ -149,18 +176,24 @@ namespace laba_2
 
         private void SpawnNewEnemy()
         {
+            if (currentEnemy is INotifyPropertyChanged oldNpc)
+            {
+                oldNpc.PropertyChanged -= OnEnemyPropertyChanged;
+            }
+
             currentEnemy = enemyManager.CreateRandomEnemy();
 
-            EnemyGrid.DataContext = currentEnemy; //
+            if (currentEnemy is INotifyPropertyChanged npc)
+            {
+                npc.PropertyChanged += OnEnemyPropertyChanged;
+            }
 
-            IconGrid.DataContext = currentEnemy.Icon; //
+            EnemyGrid.DataContext = currentEnemy;
+            IconGrid.DataContext = currentEnemy?.Icon;
+
+            UpdateEnemySize();
 
             AnimateJump();
-            if (currentEnemy == null)
-            {
-                MessageBox.Show("No enemy templates available!");
-                return;
-            }
 
         }
 

@@ -9,9 +9,29 @@ namespace laba_2
     public class YkorachEnemy : Enemy
     {
         private double ykorModifier;
+
+
         public YkorachEnemy(string Name, BigNumber MaxHitpoints, BigNumber GoldReward, BigNumber CurrentHitpoints, bool IsDead, IconItem Icon, double ykorModifier) : base(Name, MaxHitpoints, GoldReward, CurrentHitpoints, IsDead, Icon)
         {
             this.ykorModifier = ykorModifier;
+        }
+
+        public double ScaleFactor
+        {
+            get
+            {
+                if (MaxHitpoints.ToDouble() <= 0)
+                    return 1.0;
+
+                double current = CurrentHitpoints.ToDouble();
+                double max = MaxHitpoints.ToDouble();
+
+                double hpRatio = current / max; 
+               
+                double scale = 1.0 - (1.0 - hpRatio) * ykorModifier;
+
+                return Math.Max(0.3, scale);
+            }
         }
 
         public override bool TakeDamage(BigNumber dmg, out BigNumber goldReward)
