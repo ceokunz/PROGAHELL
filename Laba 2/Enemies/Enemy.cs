@@ -90,6 +90,12 @@ namespace laba_2
         {
             CurrentHitpoints.Subtract(dmg);
             // что ему не нравится с голден ревардом.........
+
+
+            goldReward = new BigNumber("555");
+
+            return true;
+            
         }
     }
 }

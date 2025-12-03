@@ -8,28 +8,29 @@ namespace laba_2
 {
     public class EnemyFactory // ЭТО ИЩЗДЕВАТЕЛЬСТВО НАД ЛЮДЬМИ =)
     {
-        public static IEnemy CreateEnemy(CEnemyTemplate template, BigNumber finalLife, BigNumber finalGold)
+        public static Enemy CreateEnemy(CEnemyTemplate template, BigNumber finalLife, BigNumber finalGold)
         {
-            if (template is CArmoredEnemyTemplate)
+            if (template.Type == ETypes.Armored)
             {
-                var armoredTemplate = template as CArmoredEnemyTemplate;
-                BigNumber armor = new BigNumber(armoredTemplate.Armor.ToString());
-                return new ArmoredEnemy(template.Name, finalLife, finalGold, false, template.Icon, armor);
+                BigNumber armor = new BigNumber("50");
+                return new ArmoredEnemy(template.Name, finalLife, finalGold, template.MaxHitpoints, false, template.Icon, armor);
             }
 
-            if (template is CYkorachEnemyTemplate)
+            if (template.Type == ETypes.Ykorach)
             {
-                var ykorTemplate = template as CYkorachEnemyTemplate;
-                return new YkorachEnemy(template.Name, finalLife, finalGold, ykorTemplate.Ykor);
+                double ykorMod = 0.5;
+                return new YkorachEnemy(template.Name, finalLife, finalGold, template.MaxHitpoints, false, template.Icon, ykorMod);
             }
 
-            if (template is CHealingEnemyTemplate)
+            if (template.Type == ETypes.Healing)
             {
-                var healingTemplate = template as CHealingEnemyTemplate;
-                return new HealingEnemy(template.Name, finalLife, finalGold, healingTemplate.HealChance, healingTemplate.HealPercentage);
+                double healChan = 20;
+                double healPerc = 30;
+                
+                return new HealingEnemy(template.Name, finalLife, finalGold, template.MaxHitpoints, false, template.Icon, healChan, healPerc);
             }
 
-            return new NormalEnemy(template.Name, finalLife, finalGold);
+            return new NormalEnemy(template.Name, finalLife, finalGold, template.MaxHitpoints, false, template.Icon);
         }
     }
 }

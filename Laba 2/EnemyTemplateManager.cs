@@ -82,15 +82,17 @@ namespace laba_2
         }
         public Enemy CreateEnemyFromTemplate(CEnemyTemplate template)
         {
+
             if (template == null)
                 return null;
 
-            return new Enemy(template.Name, template.MaxHitpoints, template.GoldReward, template.MaxHitpoints.Clone(), false, template.Icon); //не ну это что такое **** вообще ***** *** все нормально у тебя сишарп ******?
+            return EnemyFactory.CreateEnemy(template, template.MaxHitpoints, template.GoldReward);
         }
+        
         //создает случайного противника 
         public Enemy CreateRandomEnemy()
         {
-            var template = GetRandomEnemy();
+            CEnemyTemplate template = GetRandomEnemy();
             return CreateEnemyFromTemplate(template);
         }
         public void Clear()
