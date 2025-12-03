@@ -7,6 +7,7 @@ using System.Windows;
 
 namespace laba_2
 {
+    public delegate void SceneEvent(object sender, GameEventArgs e);
     public class CController : INotifyPropertyChanged
     {
         private List<CCollectable> objects;
@@ -44,6 +45,10 @@ namespace laba_2
             this.rng = new Random();
         }
 
+        public event SceneEvent addObject;
+
+        public event SceneEvent removeObject;
+
         public void IncreaseLifetimeRange(double bonus)
         {
             minLifetime += bonus;
@@ -72,6 +77,8 @@ namespace laba_2
             else obj = new CLifetimeChanger(pos, size, lifetime);
 
             objects.Add(obj);
+
+            addObject?.Invoke(this, new GameEventArgs(obj.Sprite));
         }
 
         public void Update(double delta)
@@ -101,13 +108,45 @@ namespace laba_2
             if (!Player.CanClick()) return;
             Player.PerformClick();
 
+            bool hit = false;
             for (int i = objects.Count - 1; i >= 0; i--)
             {
-                if (objects[i].OnClick(Player, this, mousePos))
+                var obj = objects[i];
+                if (obj.IsMouseOnObject(mousePos))
                 {
-                    objects.RemoveAt(i);
-                    break;
+                    string message = "";
+
+                    if (obj.OnClick(Player, this, mousePos))
+                    {
+                        if (obj is CGoldGiver goldGiver)
+                        {
+                            message = $"+{goldGiver.GetGoldValue()} gold";
+                        }
+                        else if (obj is CClickSpeedUp)
+                        {
+                            message = "Click speed increased!";
+                        }
+                        else if (obj is CSpawnRateChanger)
+                        {
+                            message = "Spawn rate decreased!";
+                        }
+                        else if (obj is CLifetimeChanger)
+                        {
+                            message = "Lifetime increased!";
+                        }
+
+                        removeObject?.Invoke(this, new GameEventArgs(obj.Sprite, message));
+
+                        objects.RemoveAt(i);
+                        hit = true;
+                        break;
+                    }
                 }
+            }
+
+            if (!hit)
+            {
+                removeObject?.Invoke(this, new GameEventArgs(null, "Miss!"));
             }
         }
 

@@ -93,7 +93,7 @@
                 </Grid>
             </StackPanel>
 
-            <StackPanel VerticalAlignment="Center" Grid.Column="2">
+            <StackPanel Grid.Column="2">
                 <Grid x:Name="PlayerGrid" Margin="10" VerticalAlignment="Center" Background="#FF97BFB6">
                     <StackPanel>
                         <Grid Height="50" Width="200">
@@ -140,6 +140,9 @@
                             <TextBlock Grid.Column="0" Text="Players damage:" Style="{StaticResource PropertyBlocks}"/>
                             <TextBlock Grid.Column="1" x:Name="PlayerDamage" Text="{Binding Path = Damage}" Style="{StaticResource NameBoxes}"/>
                         </Grid>
+                        <ListBox x:Name="EventLogBox" Height="150" Background="#F0FFF0">
+                            
+                        </ListBox>
                     </StackPanel>
                 </Grid>
             </StackPanel>

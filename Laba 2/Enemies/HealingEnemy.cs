@@ -24,17 +24,19 @@ namespace laba_2
 
             if (IsDead) return false;
 
-            if (dmg >= CurrentHitpoints)
+            if (dmg.CompareTo(CurrentHitpoints) >= 0)
             {
                 // УМИРАЕМ =)))
                 CurrentHitpoints = new BigNumber("0");
                 IsDead = true;
                 goldReward = this.GoldReward;
+                OnDefeated();
                 return true;
             }
             else
             {
                 CurrentHitpoints = CurrentHitpoints.Subtract(dmg);
+                OnDamaged(dmg);
             }
             if (rng.NextDouble() < healChance)
             {

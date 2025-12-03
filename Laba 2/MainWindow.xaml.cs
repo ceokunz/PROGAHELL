@@ -24,12 +24,17 @@ namespace laba_2
 
         private Viewbox splashViewbox;
 
+
         public MainWindow()
         {
             InitializeComponent();
 
             splashViewbox = (Viewbox)SplashGrid.Children[0];
             StartSplashScreen();
+
+            gameTimer = new DispatcherTimer();
+            gameTimer.Interval = TimeSpan.FromMilliseconds(100);
+            gameTimer.Tick += GameTimer_Tick;
 
             player = new Player(
                 Lvl: 1,
@@ -58,24 +63,11 @@ namespace laba_2
             enemyManager.LoadTemplates(templates);
             enemyManager.NormalizeChances();
 
+            InitializeGame();
+
             SpawnNewEnemy();
-
-
-            PlayerGrid.DataContext = player; //
-
-            //шиза из 3ей лабы
-
-            gameTimer = new DispatcherTimer();
-            gameTimer.Interval = TimeSpan.FromMilliseconds(100);
-            gameTimer.Tick += GameTimer_Tick;
-
-            gameRunning = true;
-            gameTimer.Start();
-            controller = new CController(player: player, spawnRate: 2.0, startTime: 0.0, sceneSize: new Size(scene.Width, scene.Height));
-
-            this.DataContext = controller;
-
-
+            
+            PlayerGrid.DataContext = player;
         }
 
         private void OnEnemyPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -88,6 +80,64 @@ namespace laba_2
                 }
             }
         }
+
+        private void InitializeGame()
+        {
+            double width = scene.ActualWidth > 0 ? scene.ActualWidth : 125;
+            double height = scene.ActualHeight > 0 ? scene.ActualHeight : 250;
+
+            controller = new CController(
+                player: player,
+                spawnRate: 2.0,
+                startTime: 0.0,
+                sceneSize: new Size(width, height)
+            );
+
+            controller.addObject += OnSphereAdded;
+            controller.removeObject += OnSphereRemoved;
+
+            this.DataContext = controller;
+
+            scene.Children.Clear();
+            EventLogBox.Items.Clear();
+
+            gameRunning = true;
+            gameTimer.Start();
+        }
+
+        private void OnSphereAdded(object sender, GameEventArgs e)
+        {
+            if (e.Target is Ellipse sprite)
+            {
+                scene.Children.Add(sprite);
+            }
+        }
+
+        private void OnSphereRemoved(object sender, GameEventArgs e)
+        {
+            if (e.Target is Ellipse sprite)
+            {
+                scene.Children.Remove(sprite);
+            }
+
+            if (!string.IsNullOrEmpty(e.Message))
+            {
+                EventLogBox.Items.Insert(0, e.Message);
+                if (EventLogBox.Items.Count > 30)
+                    EventLogBox.Items.RemoveAt(EventLogBox.Items.Count - 1);
+            }
+        }
+
+        private void OnEnemyEvent(object sender, GameEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(e.Message))
+            {
+                EventLogBox.Items.Insert(0, e.Message);
+                if (EventLogBox.Items.Count > 50)
+                    EventLogBox.Items.RemoveAt(EventLogBox.Items.Count - 1);
+            }
+        }
+
         private void UpdateEnemySize()
         {
             if (currentEnemy is YkorachEnemy ykorEnemy)
@@ -117,7 +167,7 @@ namespace laba_2
 
             //CooldownBlock.Text = controller.ClickCooldown.ToString("F2");
 
-            UpdateUI();
+            //UpdateUI();
         }
 
         private void EndGame()
@@ -130,31 +180,31 @@ namespace laba_2
             scene.Children.Clear();
         }
 
-        private void UpdateUI()
-        {
-            var currentObjects = controller.GetObjects();
+        //private void UpdateUI()
+        //{
+        //    var currentObjects = controller.GetObjects();
 
-            var toRemove = scene.Children.OfType<Ellipse>().Where(el => !currentObjects.Any(obj => obj.Sprite == el)).ToList();
+        //    var toRemove = scene.Children.OfType<Ellipse>().Where(el => !currentObjects.Any(obj => obj.Sprite == el)).ToList();
 
-            foreach (var el in toRemove)
-            {
-                scene.Children.Remove(el);
-                el.MouseDown -= OnCollectableMouseDown;
-            }    
+        //    foreach (var el in toRemove)
+        //    {
+        //        scene.Children.Remove(el);
+        //        el.MouseDown -= OnCollectableMouseDown;
+        //    }    
 
                 
 
-            foreach (var obj in currentObjects)
-            {
-                var sprite = obj.Sprite;
-                if (!scene.Children.Contains(sprite))
-                {
-                    sprite.IsHitTestVisible = true;
-                    sprite.MouseDown += OnCollectableMouseDown;
-                    scene.Children.Add(sprite);
-                }
-            }
-        }
+        //    foreach (var obj in currentObjects)
+        //    {
+        //        var sprite = obj.Sprite;
+        //        if (!scene.Children.Contains(sprite))
+        //        {
+        //            sprite.IsHitTestVisible = true;
+        //            sprite.MouseDown += OnCollectableMouseDown;
+        //            scene.Children.Add(sprite);
+        //        }
+        //    }
+        //}
 
         private void OnCollectableMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -175,24 +225,27 @@ namespace laba_2
 
         private void SpawnNewEnemy()
         {
-            if (currentEnemy is INotifyPropertyChanged oldNpc)
+            if (currentEnemy != null)
             {
-                oldNpc.PropertyChanged -= OnEnemyPropertyChanged;
+                currentEnemy.EnemyDamaged -= OnEnemyEvent;
+                currentEnemy.EnemyDefeated -= OnEnemyEvent;
+                if (currentEnemy is INotifyPropertyChanged npc1)
+                    npc1.PropertyChanged -= OnEnemyPropertyChanged;
             }
 
             currentEnemy = enemyManager.CreateRandomEnemy();
 
-            if (currentEnemy is INotifyPropertyChanged npc)
-            {
-                npc.PropertyChanged += OnEnemyPropertyChanged;
-            }
+            currentEnemy.EnemyDamaged += OnEnemyEvent;
+            currentEnemy.EnemyDefeated += OnEnemyEvent;
+            if (currentEnemy is INotifyPropertyChanged npc2)
+                npc2.PropertyChanged += OnEnemyPropertyChanged;
 
             EnemyGrid.DataContext = currentEnemy;
             IconGrid.DataContext = currentEnemy?.Icon;
+            UpdateEnemySize();  
+            AnimateJump();      
 
-            UpdateEnemySize();
-
-            AnimateJump();
+            OnEnemyEvent(this, new GameEventArgs(currentEnemy, $"{currentEnemy.Name} явился..."));
 
         }
 
@@ -241,6 +294,24 @@ namespace laba_2
             if (!gameRunning) return;
             Point mousePos = e.GetPosition(scene);
             controller.MouseClick(mousePos);
+        }
+
+        private void SubscribeToEnemyEvents(Enemy enemy)
+        {
+            if (enemy == null) return;
+
+            enemy.EnemySpawned += OnEnemyEvent;
+            enemy.EnemyDamaged += OnEnemyEvent;
+            enemy.EnemyDefeated += OnEnemyEvent;
+        }
+
+        private void UnsubscribeFromEnemyEvents(Enemy enemy)
+        {
+            if (enemy == null) return;
+
+            enemy.EnemySpawned -= OnEnemyEvent;
+            enemy.EnemyDamaged -= OnEnemyEvent;
+            enemy.EnemyDefeated -= OnEnemyEvent;
         }
 
         //анимации! ---------------------------------------------------

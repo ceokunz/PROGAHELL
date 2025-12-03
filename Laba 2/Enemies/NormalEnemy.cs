@@ -25,11 +25,13 @@ namespace laba_2
                 CurrentHitpoints = new BigNumber("0");
                 IsDead = true;
                 goldReward = this.GoldReward;
+                OnDefeated();
                 return true;
             }
             else
             {
                 CurrentHitpoints = CurrentHitpoints.Subtract(dmg);
+                OnDamaged(dmg);
                 return false;
             }
         }

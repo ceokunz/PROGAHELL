@@ -19,6 +19,29 @@ namespace laba_2
 
         //////////////////////////////////////////////////////////////////////////
         
+        public event GameEventHandler EnemySpawned;
+        public event GameEventHandler EnemyDamaged;
+        public event GameEventHandler EnemyDefeated;
+
+        //////////////////////////////////////////////////////////////////////////
+        
+        protected virtual void OnSpawned()
+        {
+            EnemySpawned?.Invoke(this, new GameEventArgs(this, $"{Name} явился..."));
+        }
+
+        protected virtual void OnDamaged(BigNumber damageDealt)
+        {
+            EnemyDamaged?.Invoke(this, new GameEventArgs(this, $"- {damageDealt} по башке"));
+        }
+
+        protected virtual void OnDefeated()
+        {
+            EnemyDefeated?.Invoke(this, new GameEventArgs(this, $"ГОООЛ! +{GoldReward} денег"));
+        }
+
+        //////////////////////////////////////////////////////////////////////////
+        
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {

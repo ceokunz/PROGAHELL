@@ -23,6 +23,10 @@ namespace laba_2
 
         //public override double GetPointsValue() => goldValue.ToDouble();
 
+        public BigNumber GetGoldValue()
+        {
+            return goldValue;
+        }
         public override bool IsMouseOnObject(Point mousePosition)
         {
             double dx = mousePosition.X - (position.X);
