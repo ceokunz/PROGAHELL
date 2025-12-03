@@ -93,14 +93,13 @@ namespace laba_2
             if (currentEnemy is YkorachEnemy ykorEnemy)
             {
                 double scale = ykorEnemy.ScaleFactor;
-                const double baseSize = 250.0;
-                image.Height = baseSize * scale;
+                const double baseSize = 125.0;
                 image.Width = baseSize * scale;
             }
             else
             {
                 image.Height = 250;
-                image.Width = 250;
+                image.Width = 125;
             }
         }
 
