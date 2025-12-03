@@ -31,6 +31,7 @@ namespace laba_2
             }
             else
             {
+                
                 CurrentHitpoints = CurrentHitpoints.Subtract(dmg);
                 return false;
             }
